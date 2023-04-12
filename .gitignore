@@ -130,3 +130,6 @@ dmypy.json
 
 # Something for personal use, don't mind it
 discord.xml
+.idea/discord.xml
+*.xml
+*.iml
