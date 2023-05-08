@@ -29,11 +29,11 @@ def login():
         username = str(hash(username))
         password = log_in.password.data
         password = str(hash(password))
-        resp = make_response(render_template('login.html', log_in=log_in))
+        resp = make_response(render_template('login.html', form=log_in))
         resp.set_cookie('username', username)
         resp.set_cookie('password', password)
         return resp
-    return render_template('login.html', log_in=log_in)
+    return render_template('login.html', form=log_in)
 
 
 if __name__ == '__main__':
