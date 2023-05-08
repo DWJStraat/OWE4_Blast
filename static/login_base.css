@@ -1,0 +1,81 @@
+/* Author: Douwe Berkeij
+    Created: 26-4-2023
+    Description: CSS for application
+ */
+
+body {
+    background-color: #76747c;
+    font-family: Arial, serif;
+    font-size: 16px;
+    color: #3b3b3b;
+}
+
+bar1 {
+    background-color: #3f3f44;
+    width: 100%;
+    height: 15%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+field {
+    background-color: #76747c;
+    width: 100%;
+    height: 85%;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
+}
+
+h1 {
+    font-size: 10vh;
+    color: #e7e7e7;
+    font-family: Arial, serif;
+    text-align: center;
+    margin-top: 1%;
+}
+
+.sidebar-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 100%;
+    position: absolute;
+    left: 20%;
+}
+
+button_searce.sidebar-button {
+    top: 16%;
+}
+
+button_input.sidebar-button {
+    top: 25%;
+}
+
+button_cookie.sidebar-button {
+    bottom: 5%;
+}
+
+.sidebar-button img {
+    max-width: 100%;
+    height: auto;
+    margin-right: 10px;
+}
+
+.home-button {
+    display: flex;
+    max-height: 100%;
+    width: 15%;
+    position: absolute;
+    left: 1%;
+    bottom: 5%;
+    overflow: hidden;
+}
+.home-button img {
+    max-height: 90%;
+    width: 100%;
+}
+.form
