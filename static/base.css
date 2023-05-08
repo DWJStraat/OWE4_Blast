@@ -3,7 +3,6 @@
     Description: CSS for application
  */
 
-
 body {
     background-color: #76747c;
     font-family: Arial, serif;
@@ -12,20 +11,17 @@ body {
 }
 
 bar1 {
-    background-color: #383D57;
+    background-color: #3f3f44;
     width: 100%;
     height: 15%;
     position: fixed;
     top: 0;
     left: 0;
     z-index: 1;
-    background-image: url("logo cource 4.png");
-    background-repeat: no-repeat;
-    background-size: auto 100%;
 }
 
 bar2 {
-    background-color: #6EA4BF;
+    background-color: #595959;
     width: 6%;
     height: 100%;
     position: fixed;
@@ -36,17 +32,50 @@ bar2 {
 
 h1 {
     font-size: 10vh;
-    color: #000000;
+    color: #e7e7e7;
     font-family: Arial, serif;
     text-align: center;
     margin-top: 1%;
 }
 
-button_searce.button1 {
-    border: none;
-    cursor: pointer;
-    background-color: inherit;
-    appearance: none;
-    position: fixed;
+.sidebar-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 100%;
+    position: absolute;
+    left: 20%;
+}
+
+button_searce.sidebar-button {
     top: 16%;
 }
+
+button_input.sidebar-button {
+    top: 25%;
+}
+
+button_cookie.sidebar-button {
+    bottom: 5%;
+}
+
+.sidebar-button img {
+    max-width: 100%;
+    height: auto;
+    margin-right: 10px;
+}
+
+.home-button {
+    display: flex;
+    max-height: 100%;
+    width: 15%;
+    position: absolute;
+    left: 1%;
+    bottom: 5%;
+    overflow: hidden;
+}
+.home-button img {
+    max-height: 90%;
+    width: 100%;
+}
+
