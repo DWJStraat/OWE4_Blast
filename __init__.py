@@ -15,9 +15,25 @@ app.secret_key = app.config['SECRET_KEY']
 login_manager = LoginManager()
 
 bootstrap = Bootstrap5(app)
+
+
 # csrf = CSRFProtect(app)
 
 # Cookies for storing login info and stuff
+
+@app.route('/', methods=['GET', 'POST'])
+def login():
+    log_in = LoginForm()
+    if log_in.validate_on_submit():
+        username = log_in.username.data
+        username = str(hash(username))
+        password = log_in.password.data
+        password = str(hash(password))
+        resp = make_response(render_template('login.html', log_in=log_in))
+        resp.set_cookie('username', username)
+        resp.set_cookie('password', password)
+        return resp
+    return render_template('login.html', log_in=log_in)
 
 
 if __name__ == '__main__':
