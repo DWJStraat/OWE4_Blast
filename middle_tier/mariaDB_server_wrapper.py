@@ -19,6 +19,9 @@ class server():
         self.database = database
 
     def connect(self):
+        """
+        This function connects to the server and stores the connection in self.connection
+        """
         try:
             self.connection = mariadb.connect(
                 user=self.user,
@@ -31,32 +34,59 @@ class server():
             return None
 
     def disconnect(self):
+        """
+        This function disconnects from the server
+        """
         self.connection.close()
 
     def execute(self, query):
+        """
+        This function executes a query on the server
+        :param query: the query to execute
+        :return cursor: the result of the query
+        """
         cursor = self.connection.cursor()
         cursor.execute(query)
         return cursor
 
     def commit(self):
+        """
+        This function commits the changes to the server
+        """
         self.connection.commit()
 
     def getCursor(self):
+        """
+        This function creates a cursor for the server and stores it in self.cursor
+        """
         self.cursor = self.connection.cursor()
 
     def closeCursor(self):
+        """
+        This function closes the cursor
+        """
         self.cursor.close()
     def open(self):
         self.connect()
         self.getCursor()
 
     def close(self, commit=False):
+        """
+        This function closes the connection to the server
+        :param commit: whether to commit the changes
+        """
         if commit:
             self.commit()
         self.closeCursor()
         self.disconnect()
 
     def query(self, query, commit=False):
+        """
+        This function executes a query on the server and returns the result
+        :param query: the query to execute
+        :param commit: whether to commit the changes
+        :return value: the result of the query
+        """
         self.open()
         try:
             self.cursor.execute(query)
