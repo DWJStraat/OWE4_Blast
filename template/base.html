@@ -3,10 +3,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <script src="window_size.js"></script>
     <title>{{ the_title }}</title>
-    <!-- Don't touch the href (unless we have a new CSS), it refers to the Flask static folder -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="../static/base.css">
 
 </head>
 <body>
@@ -17,4 +16,21 @@
 </div>
 
 </body>
+<bar2>
+    <button_searce class="sidebar-button">
+        <img src="../static/search_FILL0_wght400_GRAD0_opsz48.png">
+    </button_searce>
+    <button_input class="sidebar-button">
+        <img src="../static/input_FILL0_wght400_GRAD0_opsz48.png">
+    </button_input>
+    <button_cookie class="sidebar-button">
+        <img src="../static/cookie_FILL0_wght400_GRAD0_opsz48.png">
+    </button_cookie>
+</bar2>
+<bar1>
+    <h1>title</h1>
+    <button_home class="home-button">
+        <img src="../static/logo_cource_4.png">
+    </button_home>
+</bar1>
 </html>
