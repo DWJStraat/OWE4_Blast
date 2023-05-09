@@ -3,22 +3,33 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="window_size.js"></script>
     <title>{{ the_title }}</title>
     <link rel="stylesheet" href="../static/cookie_base.css">
 
 </head>
 <body>
-</body>
+
 <bar1>
-    <h1>title</h1>
+    <h1>cookie</h1>
     <button_home class="home-button">
-        <img src="../static/logo_cource_4.png">
+        <img src="../static/image/logo_cource_4.png">
     </button_home>
 </bar1>
 <field>
-    <button_cookie class="cookie">
-        <img src="../static/cookie-307960_1280.png">
+    <button_back class="back-button">
+        <img src="../static/image/arrow_back_ios_FILL0_wght400_GRAD0_opsz48.png">
+    </button_back>
+    <button_cookie class="cookie" id="cookie">
+        <img src="../static/image/cookie-307960_1280.png">
     </button_cookie>
+    <score class="score">
+        <img src="../static/image/score.png">
+        <p id="counter"> 0 </p>
+    </score>
+    <cookies class="text-info">
+        <p> this site makes use of cookies </p>
+    </cookies>
 </field>
+    <script src="js/cookie-clicker.js"></script>
+</body>
 </html>

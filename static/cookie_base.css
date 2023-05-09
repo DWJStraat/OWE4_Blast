@@ -7,7 +7,7 @@ body {
     background-color: #76747c;
     font-family: Arial, serif;
     font-size: 16px;
-    color: #3b3b3b;
+    color: #e7e7e7;
 }
 
 bar1 {
@@ -38,28 +38,17 @@ h1 {
     margin-top: 1%;
 }
 
-.sidebar-button {
+.back-button {
     display: flex;
     align-items: center;
     justify-content: center;
     max-width: 100%;
     position: absolute;
-    left: 20%;
-}
-
-button_searce.sidebar-button {
-    top: 16%;
-}
-
-button_input.sidebar-button {
-    top: 25%;
-}
-
-button_cookie.sidebar-button {
+    left: 2%;
     bottom: 5%;
 }
 
-.sidebar-button img {
+.back-button img {
     max-width: 100%;
     height: auto;
     margin-right: 10px;
@@ -89,4 +78,57 @@ button_cookie.sidebar-button {
     left: 50%;
     transform: translate(-50%, -50%);
 
+}
+.cookie {
+    display: flex;
+    position: absolute;
+    height: 70%;
+    width: auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    overflow: hidden;
+}
+
+.cookie img {
+    max-height: 90%;
+    width: 100%;
+}
+.score {
+    display: flex;
+    position: absolute;
+    height: auto;
+    max-width: 15%;
+    left: 30%;
+    transform: translate(-30%);
+}
+.score img {
+    height: auto;
+    max-width: 100%;
+}
+
+.score p {
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -60%);
+    position: absolute;
+    text-align: center;
+    font-size: 5vh;
+    margin-top: 4%;
+}
+.text-info {
+    display: flex;
+    position: absolute;
+    max-height: 20%;
+    width: auto;
+    left: 50%;
+    bottom: 5%;
+    transform: translate(-50%, -5%);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border: 2px solid #46464d;
+    background: #615d64;
+    padding: 0.5%;
 }
