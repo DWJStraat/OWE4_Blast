@@ -1,36 +1,34 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>cookie</title>
-    <link rel="icon" type="image/png" href="../static/image/favicon.png">
-    <link rel="stylesheet" href="../static/cookie_base.css">
+{%extends 'base.html'%}
 
-</head>
-<body>
+{% block css %}
+"../static/cookie_base.css"
+{% endblock %}
 
-<bar1>
-    <h1>cookie</h1>
-    <button_home class="home-button">
-        <img src="../static/image/logo_cource_4.png">
-    </button_home>
-</bar1>
-<field>
-    <button_back class="back-button">
-        <img src="../static/image/arrow_back_ios_FILL0_wght400_GRAD0_opsz48.png">
-    </button_back>
-    <button_cookie class="cookie" id="cookie">
-        <img src="../static/image/cookie-307960_1280.png">
-    </button_cookie>
-    <score class="score">
-        <img src="../static/image/score.png">
-        <p id="counter"> 0 </p>
-    </score>
-    <cookies class="text-info">
-        <p> this site makes use of cookies </p>
-    </cookies>
-</field>
-    <script src="js/cookie-clicker.js"></script>
-</body>
-</html>
+{% block js %}
+
+{% endblock js %}
+
+{% block content %}
+<button_back class="back-button">
+    <img src="../static/image/arrow_back_ios_FILL0_wght400_GRAD0_opsz48.png">
+</button_back>
+<button_cookie class="cookie" id="cookie">
+    <img src="../static/image/cookie-307960_1280.png">
+</button_cookie>
+<score class="score">
+    <img src="../static/image/score.png">
+    <p id="counter"> 0 </p>
+</score>
+<cookies class="text-info">
+    <p> this site makes use of cookies </p>
+</cookies>
+<script>
+    let button = document.getElementById("cookie"),
+        count = 0;
+    button.onclick = function() {
+        count += 1;
+        counter.innerHTML = count;
+    };
+</script>
+{% endblock content %}
+
