@@ -51,6 +51,13 @@ def cookies():
         return redirect(url_for('login'))
     return render_template('cookie.html', title='Cookies')
 
+@app.route('/terms_of_service')
+def terms_of_service():
+    cookies = request.cookies
+    if 'username' not in cookies or 'password' not in cookies:
+        return redirect(url_for('login'))
+    return render_template('terms_of_service.html', title='Terms of service')
+
 @app.route('/input', methods=['GET', 'POST'])
 def input():
     cookies = request.cookies

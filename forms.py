@@ -9,7 +9,7 @@ class LoginForm(FlaskForm):
     password = StringField('', validators=[DataRequired()], render_kw={"type": "password", "placeholder": "Password",
                                                                        "class": "pass"})
     terms = BooleanField(
-        Markup('I agree to the <a href="/terms">Terms of Service</a>'),
+        Markup('I agree to the <a onclick="location.href=\'/terms_of_service\'">Terms of Service</a>'),
         validators=[DataRequired()], render_kw={"class": "termsservice"})
     submit = SubmitField('Submit', render_kw={"class": "btn btn-primary"})
     submit = SubmitField('Submit', render_kw={"class": "btn btn-primary"})
