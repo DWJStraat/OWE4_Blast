@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm, CSRFProtect
-from wtforms import StringField, SubmitField
+from wtforms import StringField, SubmitField, FileField
 from wtforms.validators import DataRequired, Length
 
 class LoginForm(FlaskForm):
@@ -7,4 +7,8 @@ class LoginForm(FlaskForm):
                                                                        "class": "user"})
     password = StringField('', validators=[DataRequired()], render_kw={"type": "password", "placeholder": "Password",
                                                                        "class": "pass"})
+    submit = SubmitField('Submit', render_kw={"class": "btn btn-primary"})
+
+class UploadForm(FlaskForm):
+    file = FileField('', validators=[DataRequired()], render_kw={"class": "form-control"})
     submit = SubmitField('Submit', render_kw={"class": "btn btn-primary"})

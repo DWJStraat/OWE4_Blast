@@ -7,6 +7,8 @@ from flask import Flask, request, render_template, make_response, redirect, url_
 from flask_bootstrap import Bootstrap5
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from forms import *
+from time import time
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__, template_folder='template')
 app.config['SECRET_KEY'] = secrets.token_urlsafe(16)
@@ -49,6 +51,18 @@ def cookies():
         return redirect(url_for('login'))
     return render_template('cookie.html', title='Cookies')
 
+@app.route('/input', methods=['GET', 'POST'])
+def input():
+    cookies = request.cookies
+    form = UploadForm()
+    if 'username' not in cookies or 'password' not in cookies:
+        return redirect(url_for('login'))
+    if form.validate_on_submit():
+        file = form.file.data
+        filename = f'{int(time())}-{secure_filename(file.filename)}'
+        file.save(f'uploads/{filename}')
+        return render_template('upload.html', title='Input', form = form, file = file.filename)
+    return render_template('upload.html', title='Input', form = form)
 
 
 if __name__ == '__main__':

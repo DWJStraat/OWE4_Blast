@@ -1,0 +1,21 @@
+{% extends 'login_base.html' %}
+{% from 'bootstrap5/form.html' import render_form,render_form_row %}
+
+{% block css %}
+"../static/login_base.css"
+{% endblock %}
+
+{% block title %}
+Upload
+{% endblock %}
+
+
+{% block content %}
+<div class="container" align="center" >
+    <div class="form-floating">
+        <div class="form-floating">
+          {{ render_form(form, button_style = "success", button_size="block") }}
+        </div>
+    </div>
+</div>
+{% endblock %}
