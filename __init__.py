@@ -26,9 +26,7 @@ def home():
     cookies = request.cookies
     if 'username' not in cookies or 'password' not in cookies:
         return redirect(url_for('login'))
-    username = cookies.get('username')
-    password = cookies.get('password')
-    return render_template('home.html', username=username, password=password, title='Home')
+    return render_template('home.html', title='Home')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -46,7 +44,12 @@ def login():
 
 @app.route('/cookies')
 def cookies():
+    cookies = request.cookies
+    if 'username' not in cookies or 'password' not in cookies:
+        return redirect(url_for('login'))
     return render_template('cookie.html', title='Cookies')
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
