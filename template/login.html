@@ -1,9 +1,14 @@
 {% extends 'login_base.html' %}
 {% from 'bootstrap5/form.html' import render_form,render_form_row %}
 
+{% block css %}
+"../static/login_base.css"
+{% endblock %}
+
 {% block title %}
 Log in
 {% endblock %}
+
 
 {% block content %}
 <div class="container" align="center" >

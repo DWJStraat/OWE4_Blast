@@ -28,7 +28,7 @@ def home():
         return redirect(url_for('login'))
     username = cookies.get('username')
     password = cookies.get('password')
-    return render_template('index.html', username=username, password=password)
+    return render_template('home.html', username=username, password=password, title='Home')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -42,8 +42,11 @@ def login():
         resp.set_cookie('username', username)
         resp.set_cookie('password', password)
         return resp
-    return render_template('login.html', form=log_in)
+    return render_template('login.html', form=log_in, title='Login')
 
+@app.route('/cookies')
+def cookies():
+    return render_template('cookie.html', title='Cookies')
 
 if __name__ == '__main__':
     app.run(debug=True)
