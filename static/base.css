@@ -88,3 +88,20 @@ button_cookie.sidebar-button {
     width: 100%;
 }
 
+h2 {
+    font-size: 3vh;
+    color: #e7e7e7;
+    font-family: Arial, serif;
+    text-align: center;
+    margin-top: 1%;
+    padding: 1%;
+}
+
+p {
+    font-size: 0.7vh;
+    color: #e7e7e7;
+    font-family: Arial, serif;
+    text-align: center;
+    margin-top: 1%;
+    padding: 1%;
+}
