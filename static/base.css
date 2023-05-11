@@ -37,6 +37,7 @@ field {
     bottom: 0;
     right: 0;
     z-index: 1;
+    overflow: auto;
 }
 
 h1 {
@@ -94,16 +95,33 @@ h2 {
     font-family: Arial, serif;
     text-align: center;
     margin-top: 1%;
-    padding: 1%;
+    padding: 2%;
 }
-
-p {
-    font-size: 0.7vh;
+h3 {
+    font-size: 2.7vh;
     color: #e7e7e7;
     font-family: Arial, serif;
     text-align: center;
     margin-top: 1%;
-    padding: 1%;
+    padding: 2%;
+}
+
+p {
+    font-size: 2.5vh;
+    color: #e7e7e7;
+    font-family: Arial, serif;
+    text-align: center;
+    margin-top: 1%;
+    padding: 2%;
+}
+
+ol {
+    font-size: 2.5vh;
+    color: #e7e7e7;
+    font-family: Arial, serif;
+    text-align: center;
+    margin-top: 1%;
+    padding: 2%;
 }
 .scroll {
     overflow-y: scroll;
