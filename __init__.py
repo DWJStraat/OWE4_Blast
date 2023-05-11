@@ -23,42 +23,56 @@ bootstrap = Bootstrap5(app)
 
 # Cookies for storing login info and stuff
 
-@app.route('/')
+@app.route('/home/')
 def home():
     cookies = request.cookies
     if 'username' not in cookies or 'password' not in cookies:
         return redirect(url_for('login'))
     return render_template('home.html', title='Home')
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    log_in = LoginForm()
-    if log_in.validate_on_submit():
-        username = log_in.username.data
-        username = str(hash(username))
-        password = log_in.password.data
-        password = str(hash(password))
-        resp = make_response(render_template('login.html', form=log_in))
-        resp.set_cookie('username', username)
-        resp.set_cookie('password', password)
-        return resp
-    return render_template('login.html', form=log_in, title='Login')
 
-@app.route('/cookies')
+@app.route('/login/', methods=['GET', 'POST'])
+def login():
+    cookies = request.cookies
+    if 'username' in cookies and 'password' in cookies:
+        log_out = Logout()
+        if log_out.validate_on_submit():
+            resp = make_response(render_template('logout.html', form=log_out, message='You are logged out. Refresh '
+                                                                                      'the page or press the button to '
+                                                                                      'log in again'))
+            resp.delete_cookie('username')
+            resp.delete_cookie('password')
+            return resp
+        return render_template('logout.html', form=log_out, title='Logout', message='You are logged in. Press the '
+                                                                                    'button to log out')
+    else:
+        log_in = LoginForm()
+        if log_in.validate_on_submit():
+            username = log_in.username.data
+            username = str(hash(username))
+            password = log_in.password.data
+            password = str(hash(password))
+            resp = make_response(render_template('login.html', form=log_in))
+            resp.set_cookie('username', username)
+            resp.set_cookie('password', password)
+            return resp
+        return render_template('login.html', form=log_in, title='Login')
+
+
+@app.route('/cookies/')
 def cookies():
     cookies = request.cookies
     if 'username' not in cookies or 'password' not in cookies:
         return redirect(url_for('login'))
     return render_template('cookie.html', title='Cookies')
 
-@app.route('/terms_of_service')
+
+@app.route('/terms_of_service/')
 def terms_of_service():
-    cookies = request.cookies
-    if 'username' not in cookies or 'password' not in cookies:
-        return redirect(url_for('login'))
     return render_template('terms_of_service.html', title='Terms of service')
 
-@app.route('/input', methods=['GET', 'POST'])
+
+@app.route('/input/', methods=['GET', 'POST'])
 def input():
     cookies = request.cookies
     form = UploadForm()
@@ -68,8 +82,13 @@ def input():
         file = form.file.data
         filename = f'{int(time())}-{secure_filename(file.filename)}'
         file.save(f'uploads/{filename}')
-        return render_template('upload.html', title='Input', form = form, file = file.filename)
-    return render_template('upload.html', title='Input', form = form)
+        return render_template('upload.html', title='Input', form=form, file=file.filename)
+    return render_template('upload.html', title='Input', form=form)
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html', title='404'), 404
 
 
 if __name__ == '__main__':

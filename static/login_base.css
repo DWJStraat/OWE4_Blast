@@ -90,3 +90,7 @@ button_cookie.sidebar-button {
     left: 50%;
     transform: translate(-50%, -50%);
 }
+a {
+    color: #0a53be;
+    text-decoration: underline;
+}

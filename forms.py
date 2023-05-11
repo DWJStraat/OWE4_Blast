@@ -10,10 +10,17 @@ class LoginForm(FlaskForm):
                                                                        "class": "pass"})
     terms = BooleanField(
         Markup('I agree to the <a onclick="location.href=\'/terms_of_service\'">Terms of Service</a>'),
-        validators=[DataRequired()], render_kw={"class": "termsservice"})
-    submit = SubmitField('Submit', render_kw={"class": "btn btn-primary"})
+        validators=[
+            # DataRequired()
+        ], render_kw={"class": "termsservice"})
     submit = SubmitField('Submit', render_kw={"class": "btn btn-primary"})
 
 class UploadForm(FlaskForm):
     file = FileField('', validators=[DataRequired()], render_kw={"class": "form-control"})
     submit = SubmitField('Submit', render_kw={"class": "btn btn-primary"})
+
+class Logout(FlaskForm):
+    submit = SubmitField('Logout', render_kw={"class": "btn btn-primary"})
+
+class Login(FlaskForm):
+    submit = SubmitField('Login', render_kw={"class": "btn btn-primary"}, onclick="location.href=\'/login\'")

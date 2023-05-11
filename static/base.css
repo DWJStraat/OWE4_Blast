@@ -23,7 +23,7 @@ bar1 {
 bar2 {
     background-color: #595959;
     width: 6%;
-    height: 100%;
+    height: 85%;
     position: fixed;
     bottom: 0;
     left: 0;
@@ -56,12 +56,12 @@ h1 {
     left: 20%;
 }
 
-button_searce.sidebar-button {
-    top: 16%;
+button_search.sidebar-button {
+    top: 15%;
 }
 
 button_input.sidebar-button {
-    top: 25%;
+    top: 3%;
 }
 
 button_cookie.sidebar-button {
@@ -104,4 +104,7 @@ p {
     text-align: center;
     margin-top: 1%;
     padding: 1%;
+}
+.scroll {
+    overflow-y: scroll;
 }

@@ -6,7 +6,7 @@
     <title>{{title}}</title>
     <script>{% block js %}{% endblock %}</script>
     <link rel="icon" type="image/png" href="../static/image/favicon.png">
-    <link rel="stylesheet" href={% block css %} {% endblock %}>
+    <link rel="stylesheet" href={% block css %} "../static/login_base.css" {% endblock %}>
 
 </head>
 <body>
@@ -40,7 +40,7 @@
 {% endblock %}
 <bar1>
     <h1>{{title}}</h1>
-    <button_home class="home-button" onclick="location.href='/'">
+    <button_home class="home-button" onclick="location.href='/home/'">
         <img src="../static/image/logo_cource_4.png">
     </button_home>
 </bar1>

@@ -1,0 +1,18 @@
+{% extends 'login_base.html' %}
+
+{% block title %}
+ERROR 404 - page not found
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-10 col-lg-8 mx-lg-auto mx-md-auto">
+          <h3><center>ERROR 404 - page not found</center></h3>
+          <h3><center>Sorry, the page you are looking for does not exist.</center></h3>
+          <h3><center>Press <a onclick="history.back()">here</a> to go to the previous page</center></h3>
+            <h3><center>Or press <a onclick="location.href='/home/'">here</a> to return to home</center></h3>
+        </div>
+    </div>
+</div>
+{% endblock %}
