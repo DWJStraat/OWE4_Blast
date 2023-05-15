@@ -42,6 +42,7 @@ def login():
                                                                                       'log in again'))
             resp.delete_cookie('username')
             resp.delete_cookie('password')
+            resp.delete_cookie('database')
             return resp
         return render_template('logout.html', form=log_out, title='Logout', message='You are logged in. Press the '
                                                                                     'button to log out')
@@ -52,9 +53,12 @@ def login():
             username = str(hash(username))
             password = log_in.password.data
             password = str(hash(password))
-            resp = make_response(render_template('login.html', form=log_in))
+            database = log_in.database.data
+            database = str(hash(database))
+            resp = make_response(redirect(url_for('home')))
             resp.set_cookie('username', username)
             resp.set_cookie('password', password)
+            resp.set_cookie('database', database)
             return resp
         return render_template('login.html', form=log_in, title='Login')
 

@@ -6,7 +6,7 @@ class server():
     This class is a wrapper for the mariadb library.
     It is used to connect to a mariadb server and execute queries.
     """
-    def __init__(self, host, user, password, database):
+    def __init__(self, host, user, password, database, port=3306):
         """
         :param host: The host of the server
         :param user:
@@ -17,6 +17,7 @@ class server():
         self.user = user
         self.password = password
         self.database = database
+        self.port = port
 
     def connect(self):
         """
@@ -24,10 +25,11 @@ class server():
         """
         try:
             self.connection = mariadb.connect(
+                host=self.host,
                 user=self.user,
                 password=self.password,
-                host=self.host,
-                database=self.database
+                database=self.database,
+                port=self.port
             )
         except mariadb.Error as e:
             print(f"Error connecting to MariaDB Platform: {e}")
@@ -100,3 +102,21 @@ class server():
             print(f"Error: {e}\nQuery: {query}")
             raise e
         return value
+
+    def mass_insert (self, list_of_values, table, columns):
+        """
+        This function inserts a list of values into a table
+        :param list_of_values: the values to insert
+        :param table: the table to insert into
+        :param columns: the columns to insert into
+        """
+        query = f"INSERT INTO {table} {columns} VALUES "
+        for value in list_of_values:
+            query += f"{value}, "
+        query = query[:-2]+";"
+        print(query)
+
+
+if __name__ == '__main__':
+    test = server("145.74.104.144", "100006", "DeleteSys32", "A100006")
+    test.connect()

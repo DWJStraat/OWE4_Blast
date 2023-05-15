@@ -8,6 +8,7 @@ class LoginForm(FlaskForm):
                                                                        "class": "user"})
     password = StringField('', validators=[DataRequired()], render_kw={"type": "password", "placeholder": "Password",
                                                                        "class": "pass"})
+    database = StringField('', validators=[DataRequired()], render_kw={"placeholder": "Database"})
     terms = BooleanField(
         Markup('I agree to the <a onclick="location.href=\'/terms_of_service\'">Terms of Service</a>'),
         validators=[

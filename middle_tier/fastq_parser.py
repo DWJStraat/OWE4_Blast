@@ -2,6 +2,7 @@ import openpyxl
 import json
 class excel():
     def __init__(self, excel):
+        self.db_data = None
         if type(excel) is str:
             self.excel = open(excel, "r")
             self.excel_name = excel
@@ -24,4 +25,29 @@ class excel():
             val["rev_qual"] = row[5].value
             self.entries.append(val)
 
+    def parse_for_db(self, use_json=True):
+        data = json.loads('{}')
+        values = []
+        id = 0
+        for row in self.sheet.iter_rows():
+            if use_json:
+                data[id] = json.loads('{}')
+                data[id]["header"] = row[0].value
+                data[id]["sequence"] = row[1].value
+                data[id]["quality"] = row[2].value
+                id += 1
+                data[id] = json.loads('{}')
+                data[id]["header"] = row[3].value
+                data[id]["sequence"] = row[4].value
+                data[id]["quality"] = row[5].value
+                id += 1
+            else:
+                values += (row[0].value, row[1].value, row[2].value), (row[3].value, row[4].value, row[5].value)
+        self.db_data = data
+        self.values = values
+
+
+
+
 a = excel("Map1.xlsx")
+a.parse_for_db(use_json=False)

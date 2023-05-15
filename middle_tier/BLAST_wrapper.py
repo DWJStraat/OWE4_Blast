@@ -78,4 +78,6 @@ if __name__ == '__main__':
     a = BLAST_wrapper(file, 'nt', name='test')
     a.blast()
     a.load_results()
-    a.get_first_x(5)
+    a.get_first_x(15)
+
+print(a.hits)
