@@ -69,6 +69,10 @@ button_cookie.sidebar-button {
     bottom: 5%;
 }
 
+button_login.siderbar-button {
+    bottom: 30%;
+}
+
 .sidebar-button img {
     max-width: 100%;
     height: auto;
@@ -88,6 +92,7 @@ button_cookie.sidebar-button {
     max-height: 90%;
     width: 100%;
 }
+
 
 h2 {
     font-size: 3vh;
