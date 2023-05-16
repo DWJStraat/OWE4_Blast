@@ -103,18 +103,27 @@ class server():
             raise e
         return value
 
-    def mass_insert (self, list_of_values, table, columns):
+    def mass_insert(self, list_of_values, table, columns):
         """
         This function inserts a list of values into a table
         :param list_of_values: the values to insert
         :param table: the table to insert into
         :param columns: the columns to insert into
         """
-        query = f"INSERT INTO {table} {columns} VALUES "
+        id = self.query(f"SELECT MAX(id) FROM {table};")[0][0]
+        new_list = []
+        if id is None:
+            id = -1
         for value in list_of_values:
+            id += 1
+            value = (id,) + value
+            new_list.append(value)
+        columns = ", ".join(columns)
+        query = f"INSERT INTO {table}({columns}) VALUES "
+        for value in new_list:
             query += f"{value}, "
-        query = query[:-2]+";"
-        print(query)
+        query = f"{query[:-2]};"
+        self.query(query, commit=True)
 
 
 if __name__ == '__main__':

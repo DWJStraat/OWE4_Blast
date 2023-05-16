@@ -47,7 +47,6 @@ class excel():
         self.values = values
 
 
-
-
-a = excel("Map1.xlsx")
-a.parse_for_db(use_json=False)
+if __name__ == "__main__":
+    a = excel("Map1.xlsx")
+    a.parse_for_db(use_json=False)

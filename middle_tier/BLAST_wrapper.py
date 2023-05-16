@@ -79,5 +79,3 @@ if __name__ == '__main__':
     a.blast()
     a.load_results()
     a.get_first_x(15)
-
-print(a.hits)

@@ -7,8 +7,9 @@ from flask import Flask, request, render_template, make_response, redirect, url_
 from flask_bootstrap import Bootstrap5
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from forms import *
-from time import time
-from werkzeug.utils import secure_filename
+from middle_tier import fastq_parser as fastq
+from middle_tier.mariaDB_server_wrapper import server as mariaDB
+import json
 
 app = Flask(__name__, template_folder='template')
 app.config['SECRET_KEY'] = secrets.token_urlsafe(16)
@@ -50,11 +51,11 @@ def login():
         log_in = LoginForm()
         if log_in.validate_on_submit():
             username = log_in.username.data
-            username = str(hash(username))
+            # username = str(hash(username))
             password = log_in.password.data
-            password = str(hash(password))
+            # password = str(hash(password))
             database = log_in.database.data
-            database = str(hash(database))
+            # database = str(hash(database))
             resp = make_response(redirect(url_for('home')))
             resp.set_cookie('username', username)
             resp.set_cookie('password', password)
@@ -82,13 +83,36 @@ def input():
     form = UploadForm()
     if 'username' not in cookies or 'password' not in cookies:
         return redirect(url_for('login'))
+    username = cookies['username']
+    password = cookies['password']
+    database = cookies['database']
+    config = json.load(open('config.json'))
+    host = config['DB_IP']
     if form.validate_on_submit():
         file = form.file.data
-        filename = f'{int(time())}-{secure_filename(file.filename)}'
-        file.save(f'uploads/{filename}')
+        file.save('uploads/dataset.xlsx')
+        excel = fastq.excel('uploads/dataset.xlsx')
+        excel.parse_for_db(use_json=False)
+        values = excel.values
+        server = mariaDB(host, username, password, database)
+        server.mass_insert(values, 'DNA_seq', ["ID","seq_header", "quality", "sequence"])
         return render_template('upload.html', title='Input', form=form, file=file.filename)
     return render_template('upload.html', title='Input', form=form)
 
+@app.route('/search/')
+def search():
+    cookies = request.cookies
+    form = Search()
+    if 'username' not in cookies or 'password' not in cookies:
+        return redirect(url_for('login'))
+    if form.validate_on_submit():
+        return redirect(url_for('search_results'))
+    return render_template('search.html', title='Search', form = form)
+
+@app.route('/search_results/', methods=['GET', 'POST'])
+def search_results():
+    results = ['aaa','bbb', 'ccc','dd','eee']
+    return render_template('search_results.html', title='Search results', result_list=results)
 
 @app.errorhandler(404)
 def page_not_found(e):

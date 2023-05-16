@@ -1,0 +1,22 @@
+{%extends 'base.html'%}
+
+{% block content %}
+<table>
+    <tr>
+        <th>Result</th>
+        <th>Header</th>
+        <th>Organism</th>
+        <th>Protein</th>
+        <th>E-value</th>
+    </tr>
+{% for result in result_list %}
+    <div class="container" align="center" >
+        <p>
+            {{result}}
+        </p>
+
+    </div>
+{% endfor %}
+</table>
+{% endblock content %}
+```

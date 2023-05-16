@@ -25,3 +25,13 @@ class Logout(FlaskForm):
 
 class Login(FlaskForm):
     submit = SubmitField('Login', render_kw={"class": "btn btn-primary"}, onclick="location.href=\'/login\'")
+
+class Search(FlaskForm):
+    orgname = StringField('', render_kw={"placeholder": "Name of organism"})
+    protname = StringField('', render_kw={"placeholder": "Name of protein"})
+    header = StringField('', render_kw={"placeholder": "Header of sequence"})
+    seq = StringField('', render_kw={"placeholder": "Sequence"})
+    eval_threshold = StringField('', render_kw={"placeholder": "E-value threshold"})
+    query_coverage = StringField('', render_kw={"placeholder": "Query coverage"})
+    origin = StringField('', render_kw={"placeholder": "Origin"})
+    submit = SubmitField('Search', render_kw={"class": "btn btn-primary"})
