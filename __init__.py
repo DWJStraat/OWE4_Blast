@@ -1,11 +1,22 @@
-# Initiates the web app
-# Created on 12-apr-2023 by David
-# Collaborators: David, Douwe, Jalmar
-# Last modified on 12-apr-2023 by David
+"""
+Initiates the web app
+Created on 12-apr-2023 by David
+Collaborators: David, Douwe, Jalmar
+Last modified on 12-apr-2023 by David
+"""
 import secrets
-from flask import Flask, request, render_template, make_response, redirect, url_for
+from flask import Flask, \
+    request, \
+    render_template, \
+    make_response, \
+    redirect, \
+    url_for
 from flask_bootstrap import Bootstrap5
-from flask_login import LoginManager, login_user, logout_user, login_required, current_user
+from flask_login import LoginManager, \
+    login_user, \
+    logout_user, \
+    login_required, \
+    current_user
 from forms import *
 from middle_tier import fastq_parser as fastq
 from middle_tier.mariaDB_server_wrapper import server as mariaDB
@@ -38,9 +49,13 @@ def login():
     if 'username' in cookies and 'password' in cookies:
         log_out = Logout()
         if log_out.validate_on_submit():
-            resp = make_response(render_template('logout.html', form=log_out, message='You are logged out. Refresh '
-                                                                                      'the page or press the button to '
-                                                                                      'log in again'))
+            resp = make_response(render_template('logout.html',
+                                                 form=log_out,
+                                                 message='You are logged out.'
+                                                         ' Refresh '
+                                                         'the page or press '
+                                                         'the button to '
+                                                         'log in again'))
             resp.delete_cookie('username')
             resp.delete_cookie('password')
             resp.delete_cookie('database')
