@@ -51,8 +51,8 @@ def login():
         if log_out.validate_on_submit():
             resp = make_response(render_template('logout.html',
                                                  form=log_out,
-                                                 message='You are logged out.'
-                                                         ' Refresh '
+                                                 message='You are logged out. '
+                                                         'Refresh '
                                                          'the page or press '
                                                          'the button to '
                                                          'log in again'))
@@ -60,8 +60,11 @@ def login():
             resp.delete_cookie('password')
             resp.delete_cookie('database')
             return resp
-        return render_template('logout.html', form=log_out, title='Logout', message='You are logged in. Press the '
-                                                                                    'button to log out')
+        return render_template('logout.html',
+                               form=log_out,
+                               title='Logout',
+                               message='You are logged in. Press the '
+                                       'button to log out')
     else:
         log_in = LoginForm()
         if log_in.validate_on_submit():
@@ -80,7 +83,7 @@ def login():
 
 
 @app.route('/cookies/')
-def cookies():
+def cookie():
     cookies = request.cookies
     if 'username' not in cookies or 'password' not in cookies:
         return redirect(url_for('login'))
@@ -93,7 +96,7 @@ def terms_of_service():
 
 
 @app.route('/input/', methods=['GET', 'POST'])
-def input():
+def inpoof():
     cookies = request.cookies
     form = UploadForm()
     if 'username' not in cookies or 'password' not in cookies:
@@ -110,9 +113,15 @@ def input():
         excel.parse_for_db(use_json=False)
         values = excel.values
         server = mariaDB(host, username, password, database)
-        server.mass_insert(values, 'DNA_seq', ["ID","seq_header", "quality", "sequence"])
-        return render_template('upload.html', title='Input', form=form, file=file.filename)
+        server.mass_insert(values,
+                           'DNA_seq',
+                           ["ID", "seq_header", "quality", "sequence"])
+        return render_template('upload.html',
+                               title='Input',
+                               form=form,
+                               file=file.filename)
     return render_template('upload.html', title='Input', form=form)
+
 
 @app.route('/search/')
 def search():
@@ -122,12 +131,16 @@ def search():
         return redirect(url_for('login'))
     if form.validate_on_submit():
         return redirect(url_for('search_results'))
-    return render_template('search.html', title='Search', form = form)
+    return render_template('search.html', title='Search', form=form)
+
 
 @app.route('/search_results/', methods=['GET', 'POST'])
 def search_results():
-    results = ['aaa','bbb', 'ccc','dd','eee']
-    return render_template('search_results.html', title='Search results', result_list=results)
+    results = ['aaa', 'bbb', 'ccc', 'dd', 'eee']
+    return render_template('search_results.html',
+                           title='Search results',
+                           result_list=results)
+
 
 @app.errorhandler(404)
 def page_not_found(e):
