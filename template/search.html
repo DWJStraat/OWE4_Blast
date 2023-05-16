@@ -1,6 +1,10 @@
 {%extends 'base.html'%}
 {% from 'bootstrap5/form.html' import render_form,render_form_row %}
 
+{% block js %}
+<script src="../js/popup.js"></script>
+{% endblock js %}
+
 {% block content %}
 {{render_form(form)}}
 {% endblock content %}

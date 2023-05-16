@@ -7,7 +7,8 @@ from wtforms.validators import DataRequired, Length
 class LoginForm(FlaskForm):
     username = StringField('', validators=[DataRequired()], render_kw={"placeholder": "Username",
                                                                        "class": "user",
-                                                                       "style": 'scale: 200%'})
+                                                                       "style": 'scale: 200%',
+                                                                       'margin': '0 auto'})
     password = StringField('', validators=[DataRequired()], render_kw={"type": "password", "placeholder": "Password",
                                                                        "class": "pass",
                                                                        "style": 'scale: 200%'})
@@ -21,7 +22,8 @@ class LoginForm(FlaskForm):
         validators=[
             # DataRequired()
         ], render_kw={"class": "termsservice"})
-    submit = SubmitField('Submit', render_kw={"class": "btn btn-primary"})
+    submit = SubmitField('Submit', render_kw={"class": "btn btn-primary",
+                                              "style": 'scale: 200%'})
 
 
 class UploadForm(FlaskForm):

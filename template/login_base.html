@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{title}}</title>
-    <script>{% block js %}{% endblock %}</script>
+    {% block js %}{% endblock %}
     <link rel="icon" type="image/png" href="../static/image/favicon.png">
     <link rel="stylesheet" href={% block css %} "../static/login_base.css" {% endblock %}>
 

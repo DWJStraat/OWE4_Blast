@@ -125,6 +125,12 @@ class server():
         query = f"{query[:-2]};"
         self.query(query, commit=True)
 
+    def get_ID(self, table):
+        table_id = self.query(f"SELECT MAX(id) FROM {table};")[0][0]
+        if table_id is None:
+            table_id = -1
+        return table_id + 1
+
 
 if __name__ == '__main__':
     test = server("145.74.104.144", "100006", "DeleteSys32", "A100006")

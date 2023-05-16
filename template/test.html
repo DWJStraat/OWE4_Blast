@@ -1,15 +1,17 @@
 {% extends 'base.html' %}
-{% from 'bootstrap5/form.html' import render_form %}
 {% block title %}
 Login
 {% endblock %}
+
+{% block js %}
+<script src="../js/login.js"></script>
+{% endblock js %}
 
 {% block content %}
 <div class="container">
     <div class="row">
         <div class="col-md-10 col-lg-8 mx-lg-auto mx-md-auto">
-            <h2>{{ message}}</h2>
-            {{ render_form(form) }}
+
         </div>
     </div>
 </div>
