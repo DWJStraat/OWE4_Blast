@@ -44,7 +44,10 @@ class Login(FlaskForm):
 
 
 class Search(FlaskForm):
-    orgname = StringField('', render_kw={"placeholder": "Name of organism"})
+    orgname = StringField(Markup('<button_orgname class="info-button", onclick="infoPopUp()", title="info">'
+                                 '<img src = "../static/image/info_FILL0_wght400_GRAD0_opsz48.png">'
+                                 '<span class="popuptext" id="infopopup">test text</span>')
+    , render_kw={"placeholder": "Name of organism"})
     protname = StringField('', render_kw={"placeholder": "Name of protein"})
     header = StringField('', render_kw={"placeholder": "Header of sequence"})
     seq = StringField('', render_kw={"placeholder": "Sequence"})
