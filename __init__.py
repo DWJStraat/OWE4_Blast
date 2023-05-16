@@ -37,6 +37,11 @@ bootstrap = Bootstrap5(app)
 
 @app.route('/home/')
 def home():
+    """
+    Home page, base page when website is visited.
+    :return: rendered template home.html
+    author: David, Jalmar
+    """
     cookies = request.cookies
     if 'username' not in cookies or 'password' not in cookies:
         return redirect(url_for('login'))
@@ -45,6 +50,12 @@ def home():
 
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
+    """
+    Login page, allows user to log in.
+    If user is already logged in, redirects to log out page.
+    :return: rendered template login.html
+    author: David, Jalmar
+    """
     cookies = request.cookies
     if 'username' in cookies and 'password' in cookies:
         log_out = Logout()
@@ -84,6 +95,13 @@ def login():
 
 @app.route('/cookies/')
 def cookie():
+    """
+    Cookie page.
+    notifies that cookies are used.
+    cookie clicker game available for play.
+    :return: rendered template cookie.html
+    author: David, Douwe, Jalmar
+    """
     cookies = request.cookies
     if 'username' not in cookies or 'password' not in cookies:
         return redirect(url_for('login'))
@@ -92,11 +110,23 @@ def cookie():
 
 @app.route('/terms_of_service/')
 def terms_of_service():
+    """
+    Terms of service page.
+    displays terms of service.
+    :return: rendered template terms_of_service.html
+    author: David, Douwe, Jalmar
+    """
     return render_template('terms_of_service.html', title='Terms of service')
 
 
 @app.route('/input/', methods=['GET', 'POST'])
 def inpoof():
+    """
+    Input page.
+    Allows user to upload a file.
+    :return: rendered template upload.html
+    author: David, Jalmar
+    """
     cookies = request.cookies
     form = UploadForm()
     if 'username' not in cookies or 'password' not in cookies:
@@ -125,6 +155,12 @@ def inpoof():
 
 @app.route('/search/')
 def search():
+    """
+    Search page.
+    Allows user to browse the database.
+    :return: rendered template search.html
+    author: David, Jalmar
+    """
     cookies = request.cookies
     form = Search()
     if 'username' not in cookies or 'password' not in cookies:
@@ -136,6 +172,12 @@ def search():
 
 @app.route('/search_results/', methods=['GET', 'POST'])
 def search_results():
+    """
+    Search results page.
+    Displays results from search.
+    :return: rendered template search_results.html
+    author: David, Jalmar
+    """
     results = ['aaa', 'bbb', 'ccc', 'dd', 'eee']
     return render_template('search_results.html',
                            title='Search results',
@@ -144,8 +186,18 @@ def search_results():
 
 @app.errorhandler(404)
 def page_not_found(e):
+    """
+    404 page.
+    Displays 404 error.
+    :param e: /
+    :return: rendered template 404.html
+    author: David, Jalmar
+    """
     return render_template('404.html', title='404'), 404
 
 
 if __name__ == '__main__':
+    """
+    Runs the app.
+    """
     app.run(debug=True)
