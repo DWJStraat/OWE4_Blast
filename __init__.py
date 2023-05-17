@@ -153,7 +153,7 @@ def inpoof():
     return render_template('upload.html', title='Input', form=form)
 
 
-@app.route('/search/')
+@app.route('/search/', methods=['GET', 'POST'])
 def search():
     """
     Search page.
