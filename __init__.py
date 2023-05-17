@@ -183,9 +183,6 @@ def search_results():
                            title='Search results',
                            result_list=results)
 
-@app.route('/')
-def test():
-    return render_template('test.html', title='Test')
 @app.errorhandler(404)
 def page_not_found(e):
     """
