@@ -48,7 +48,10 @@ class Login(FlaskForm):
 class Search(FlaskForm):
     orgname = StringField(Markup('<button_orgname class="info-button", onclick="infoPopUp_orgname()", title="info">'
                                  '<img src = "../static/image/info_FILL0_wght400_GRAD0_opsz48.png">'
-                                 '<span class="popuptext" id="infopopup_orgname">test text</span>')
+                                 '<span class="popuptext" id="infopopup_orgname">'
+                                 '<b1>Organism name</b1><br><b2>description</b2><br>'
+                                 '&emsp;Searches for these &emsp;words in the name &emsp;of the organisme<br>'
+                                 '</span>')
                           , render_kw={"placeholder": "Name of organism"})
     protname = StringField(Markup('<button_protname class="info-button", onclick="infoPopUp_protname()", title="info">'
                                   '<img src = "../static/image/info_FILL0_wght400_GRAD0_opsz48.png">'
