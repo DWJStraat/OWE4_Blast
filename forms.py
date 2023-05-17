@@ -63,6 +63,13 @@ class Search(FlaskForm):
                                  '&emsp;Searches for these '
                                  '&emsp;words in the name '
                                  '&emsp;of the organisme<br>'
+                                 '<b2>Be aware of the following:</b2><br>'
+                                 '<ol>'
+                                 '<ul>Searches are case sensitive</ul>'
+                                 '</ol>'
+                                 '<b2>Syntax-equivalent '
+                                 'in the normal search</b2><br>'
+                                 'homo sapiens'
                                  '</span>'),
                           render_kw={"placeholder": "Name of organism"})
     protname = StringField(Markup('<button_protname class="info-button", '
