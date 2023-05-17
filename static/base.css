@@ -185,7 +185,21 @@ ol {
 }
 
 /* The actual popup (appears on top) */
-.info-button .popuptext {
+.info-button .popuptext_bottom {
+    visibility: hidden;
+    width: 160px;
+    background-color: #555;
+    color: #fff;
+    text-align: left;
+    border-radius: 6px;
+    padding: 8px;
+    position: absolute;
+    z-index: 1;
+    left: 10%;
+    margin-left: -80px;
+}
+
+.info-button .popuptext_top {
     visibility: hidden;
     width: 160px;
     background-color: #555;
@@ -201,7 +215,17 @@ ol {
 }
 
 /* Popup arrow */
-.info-button .popuptext::after {
+.info-button .popuptext_bottom::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent #555 transparent;
+}
+.info-button .popuptext_top::after {
     content: "";
     position: absolute;
     top: 100%;
