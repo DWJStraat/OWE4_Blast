@@ -120,7 +120,7 @@ def terms_of_service():
 
 
 @app.route('/input/', methods=['GET', 'POST'])
-def inpoof():
+def input_page():
     """
     Input page.
     Allows user to upload a file.
