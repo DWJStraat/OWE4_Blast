@@ -183,6 +183,7 @@ def search_results():
                            title='Search results',
                            result_list=results)
 
+
 @app.errorhandler(404)
 def page_not_found(e):
     """

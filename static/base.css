@@ -123,6 +123,22 @@ p {
     padding-right: 10%;
 }
 
+b1 {
+    font-size: 3vh;
+    color: #e7e7e7;
+    font-family: Arial, serif;
+    text-align: left;
+    margin-top: 1%;
+}
+b2 {
+    font-size: 2.5vh;
+    color: #e7e7e7;
+    font-family: Arial, serif;
+    text-align: left;
+    margin-top: 1%;
+    font-weight: bold;
+}
+
 div {
     margin: 30px;
 }
@@ -169,23 +185,47 @@ ol {
 }
 
 /* The actual popup (appears on top) */
-.info-button .popuptext {
+.info-button .popuptext_bottom {
     visibility: hidden;
-    width: 160px;
+    width: 200px;
     background-color: #555;
     color: #fff;
-    text-align: center;
+    text-align: left;
     border-radius: 6px;
-    padding: 8px 0;
+    padding: 8px;
+    position: absolute;
+    z-index: 1;
+    left: 10%;
+    margin-left: -80px;
+}
+
+.info-button .popuptext_top {
+    visibility: hidden;
+    width: 200px;
+    background-color: #555;
+    color: #fff;
+    text-align: left;
+    border-radius: 6px;
+    padding: 8px;
     position: absolute;
     z-index: 1;
     bottom: 125%;
-    left: 50%;
+    left: 10%;
     margin-left: -80px;
 }
 
 /* Popup arrow */
-.info-button .popuptext::after {
+.info-button .popuptext_bottom::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent #555 transparent;
+}
+.info-button .popuptext_top::after {
     content: "";
     position: absolute;
     top: 100%;
