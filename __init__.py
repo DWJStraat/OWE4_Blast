@@ -201,3 +201,9 @@ if __name__ == '__main__':
     Runs the app.
     """
     app.run(debug=True)
+
+def run():
+    """
+    Runs the app.
+    """
+    app.run(debug=True)
