@@ -35,6 +35,13 @@ bootstrap = Bootstrap5(app)
 
 # Cookies for storing login info and stuff
 
+@app.route('/')
+def index():
+    """
+    Index page, redirects to home page.
+    :return: redirect to home page
+    """
+    return render_template('index.html')
 @app.route('/home/')
 def home():
     """
