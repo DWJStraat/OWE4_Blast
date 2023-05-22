@@ -98,3 +98,11 @@ a {
     color: #0a53be;
     text-decoration: underline;
 }
+h2 {
+    font-size: 3vh;
+    color: #e7e7e7;
+    font-family: Arial, serif;
+    text-align: center;
+    margin-top: 1%;
+    padding: 2%;
+}
