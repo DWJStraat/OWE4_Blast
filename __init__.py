@@ -29,7 +29,7 @@ app.secret_key = app.config['SECRET_KEY']
 login_manager = LoginManager()
 
 bootstrap = Bootstrap5(app)
-
+config = json.load(open('config.json', 'r'))
 
 # csrf = CSRFProtect(app)
 
@@ -92,12 +92,21 @@ def login():
             # password = str(hash(password))
             database = log_in.database.data
             # database = str(hash(database))
-            resp = make_response(redirect(url_for('home')))
-            resp.set_cookie('username', username)
-            resp.set_cookie('password', password)
-            resp.set_cookie('database', database)
-            return resp
-        return render_template('login.html', form=log_in, title='Login')
+            server = mariaDB(config['DB_IP'], username, password, database)
+            connection = server.connect()
+            if connection is True:
+                resp = make_response(redirect(url_for('home')))
+                resp.set_cookie('username', username)
+                resp.set_cookie('password', password)
+                resp.set_cookie('database', database)
+                return resp
+            else:
+                return render_template('login.html',
+                                       form=log_in,
+                                       title='Login',
+                                       message='Incorrect username or '
+                                               'password')
+        return render_template('login.html', form=log_in, title='Login', message='')
 
 
 @app.route('/cookies/')

@@ -31,9 +31,10 @@ class server():
                 database=self.database,
                 port=self.port
             )
+            return True
         except mariadb.Error as e:
             print(f"Error connecting to MariaDB Platform: {e}")
-            return None
+            return False
 
     def disconnect(self):
         """
