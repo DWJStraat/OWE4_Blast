@@ -13,7 +13,7 @@ class BLASTwrapper():
     This class is a wrapper for the Bio.Blast library.
     """
 
-    def __init__(self, sequence, database, name, debug=False, matrix='BLOSUM62', process = 0):
+    def __init__(self, sequence, database, name, debug=False, matrix='BLOSUM62', process = 0, program = 'blastx'):
         self.hits = None
         self.xml = None
         self.result = None
@@ -23,6 +23,7 @@ class BLASTwrapper():
         self.debug = debug
         self.matrix = matrix
         self.process = process
+        self.program = program
 
     def blast(self):
         """
@@ -32,7 +33,7 @@ class BLASTwrapper():
         if not self.debug:
             timestamp = time()
             print(f'{Style.DIM}BLASTing {self.name} against database {self.database} at {timestamp}')
-            self.result = NCBIWWW.qblast("blastn", self.database, self.sequence, alignments=15, megablast=True)
+            self.result = NCBIWWW.qblast(self.program, self.database, self.sequence, alignments=15, megablast=True)
         else:
             print(f'{Style.DIM}BLASTing {self.name} against database {self.database}')
             self.result = open('test.xml', 'r')
