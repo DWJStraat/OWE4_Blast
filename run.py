@@ -1,3 +1,3 @@
 from waitress import serve
-from __init__ import run
-serve(run(), host="0.0.0.0", port=443)
+import __init__ as app
+serve(app, port=443, url_scheme='https')
