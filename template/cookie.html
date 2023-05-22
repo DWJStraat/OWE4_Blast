@@ -10,13 +10,13 @@
 
 {% block content %}
 <button_back class="back-button" onclick="history.back()">
-    <img src="../static/image/arrow_back_ios_FILL0_wght400_GRAD0_opsz48.png">
+    <img src="../static/image/arrow_back_ios_FILL0_wght400_GRAD0_opsz48.png" alt="back">
 </button_back>
 <button_cookie class="cookie" id="cookie">
-    <img src="../static/image/cookie-307960_1280.png">
+    <img src="../static/image/cookie-307960_1280.png" alt="cookie">
 </button_cookie>
 <score class="score">
-    <img src="../static/image/score.png">
+    <img src="../static/image/score.png" alt="score">
     <p id="counter"> 0 </p>
 </score>
 <cookies class="text-info">
@@ -25,8 +25,9 @@
 <script>
     let button = document.getElementById("cookie"),
         count = 0;
-    button.onclick = function() {
+    button.onclick = function () {
         count += 1;
+        let counter = document.getElementById("counter");
         counter.innerHTML = count;
     };
 </script>

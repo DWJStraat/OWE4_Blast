@@ -2,7 +2,6 @@ Flask==2.2.3
 Frozen-Flask==0.18
 Bootstrap-Flask==2.2.0
 mariadb==1.1.6
-Flask-Login==0.6.2
 Flask-WTF==1.1.1
 biopython==1.81
 pandas==2.0.1

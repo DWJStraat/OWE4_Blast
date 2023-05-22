@@ -12,24 +12,18 @@ from flask import Flask, \
     redirect, \
     url_for
 from flask_bootstrap import Bootstrap5
-from flask_login import LoginManager, \
-    login_user, \
-    logout_user, \
-    login_required, \
-    current_user
 from forms import *
 from middle_tier import fastq_parser as fastq
-from middle_tier.mariaDB_server_wrapper import server as mariaDB
+from middle_tier.mariaDB_server_wrapper import server as mariadb
 import json
 
 app = Flask(__name__, template_folder='template')
 app.config['SECRET_KEY'] = secrets.token_urlsafe(16)
 app.secret_key = app.config['SECRET_KEY']
 
-login_manager = LoginManager()
-
 bootstrap = Bootstrap5(app)
 config = json.load(open('config.json', 'r'))
+
 
 # csrf = CSRFProtect(app)
 
@@ -42,6 +36,8 @@ def index():
     :return: redirect to home page
     """
     return render_template('index.html')
+
+
 @app.route('/home/')
 def home():
     """
@@ -89,7 +85,7 @@ def login():
             # password = str(hash(password))
             database = log_in.database.data
             # database = str(hash(database))
-            server = mariaDB(config['DB_IP'], username, password, database)
+            server = mariadb(config['DB_IP'], username, password, database)
             connection = server.connect()
             if connection is True:
                 resp = make_response(redirect(url_for('home')))
@@ -125,7 +121,7 @@ def cookie():
 def terms_of_service():
     """
     Terms of service page.
-    displays terms of service.
+    Display terms of service.
     :return: rendered template terms_of_service.html
     author: David, Douwe, Jalmar
     """
@@ -147,7 +143,6 @@ def input_page():
     username = cookies['username']
     password = cookies['password']
     database = cookies['database']
-    config = json.load(open('config.json'))
     host = config['DB_IP']
     if form.validate_on_submit():
         file = form.file.data
@@ -155,7 +150,7 @@ def input_page():
         excel = fastq.excel('uploads/dataset.xlsx')
         excel.parse_for_db(use_json=False)
         values = excel.values
-        server = mariaDB(host, username, password, database)
+        server = mariadb(host, username, password, database)
         server.mass_insert(values,
                            'DNA_seq',
                            ["ID", "seq_header", "quality", "sequence"])
@@ -187,7 +182,7 @@ def search():
 def search_results():
     """
     Search results page.
-    Displays results from search.
+    Display results from search.
     :return: rendered template search_results.html
     author: David, Jalmar
     """
@@ -206,7 +201,7 @@ def page_not_found(e):
     :return: rendered template 404.html
     author: David, Jalmar
     """
-    return render_template('404.html', title='404'), 404
+    return render_template('404.html', title='404', error=e), 404
 
 
 if __name__ == '__main__':
