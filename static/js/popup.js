@@ -23,9 +23,8 @@ function infoPopUp_eval_threshold() {hide_orgname();hide_protname();hide_header(
     var popup = document.getElementById("infopopup_eval_threshold");
     popup.classList.toggle("show");}
 
-function infoPopUp_origin() {hide_orgname();hide_protname();hide_header();hide_seq();hide_eval_threshold();
-    hide_query_coverage();
-    var popup = document.getElementById("infopopup_origin");
+function infoPopUp_query_coverage() {hide_orgname();hide_protname();hide_header();hide_seq();hide_eval_threshold();
+    var popup = document.getElementById("infopopup_query_coverage");
     popup.classList.toggle("show");}
 
 function hide_orgname() {var popup = document.getElementById("infopopup_orgname");
