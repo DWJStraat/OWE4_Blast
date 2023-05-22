@@ -21,7 +21,7 @@ insert into BLAST_result values ({E_val},
 
 insert into Responsible_Machine values ({id}, {ip}, {name});
 
-insert into Process values (1, 2,
+insert into Process values ({process_id}, {status},
                             {dna_seq_id}(select ds.ID from DNA_seq ds
                                 left join Process p on ds.ID = p.ID limit 1),
                             {responsible_machine_id}(select ds.ID from DNA_seq ds
