@@ -12,28 +12,31 @@ from flask import Flask, \
     redirect, \
     url_for
 from flask_bootstrap import Bootstrap5
-from flask_login import LoginManager, \
-    login_user, \
-    logout_user, \
-    login_required, \
-    current_user
 from forms import *
 from middle_tier import fastq_parser as fastq
-from middle_tier.mariaDB_server_wrapper import server as mariaDB
+from middle_tier.mariaDB_server_wrapper import server as mariadb
 import json
 
 app = Flask(__name__, template_folder='template')
 app.config['SECRET_KEY'] = secrets.token_urlsafe(16)
 app.secret_key = app.config['SECRET_KEY']
 
-login_manager = LoginManager()
-
 bootstrap = Bootstrap5(app)
+config = json.load(open('config.json', 'r'))
 
 
 # csrf = CSRFProtect(app)
 
 # Cookies for storing login info and stuff
+
+@app.route('/')
+def index():
+    """
+    Index page, redirects to home page.
+    :return: redirect to home page
+    """
+    return render_template('index.html')
+
 
 @app.route('/home/')
 def home():
@@ -57,16 +60,14 @@ def login():
     author: David, Jalmar
     """
     cookies = request.cookies
+    log_in = LoginForm()
     if 'username' in cookies and 'password' in cookies:
         log_out = Logout()
         if log_out.validate_on_submit():
-            resp = make_response(render_template('logout.html',
-                                                 form=log_out,
-                                                 message='You are logged out. '
-                                                         'Refresh '
-                                                         'the page or press '
-                                                         'the button to '
-                                                         'log in again'))
+            resp = make_response(render_template('login.html',
+                                                 form=log_in,
+                                                 title='Login',
+                                                 message=''))
             resp.delete_cookie('username')
             resp.delete_cookie('password')
             resp.delete_cookie('database')
@@ -77,7 +78,6 @@ def login():
                                message='You are logged in. Press the '
                                        'button to log out')
     else:
-        log_in = LoginForm()
         if log_in.validate_on_submit():
             username = log_in.username.data
             # username = str(hash(username))
@@ -85,12 +85,21 @@ def login():
             # password = str(hash(password))
             database = log_in.database.data
             # database = str(hash(database))
-            resp = make_response(redirect(url_for('home')))
-            resp.set_cookie('username', username)
-            resp.set_cookie('password', password)
-            resp.set_cookie('database', database)
-            return resp
-        return render_template('login.html', form=log_in, title='Login')
+            server = mariadb(config['DB_IP'], username, password, database)
+            connection = server.connect()
+            if connection is True:
+                resp = make_response(redirect(url_for('home')))
+                resp.set_cookie('username', username)
+                resp.set_cookie('password', password)
+                resp.set_cookie('database', database)
+                return resp
+            else:
+                return render_template('login.html',
+                                       form=log_in,
+                                       title='Login',
+                                       message='Incorrect username or '
+                                               'password')
+        return render_template('login.html', form=log_in, title='Login', message='')
 
 
 @app.route('/cookies/')
@@ -112,7 +121,7 @@ def cookie():
 def terms_of_service():
     """
     Terms of service page.
-    displays terms of service.
+    Display terms of service.
     :return: rendered template terms_of_service.html
     author: David, Douwe, Jalmar
     """
@@ -134,7 +143,6 @@ def input_page():
     username = cookies['username']
     password = cookies['password']
     database = cookies['database']
-    config = json.load(open('config.json'))
     host = config['DB_IP']
     if form.validate_on_submit():
         file = form.file.data
@@ -142,7 +150,7 @@ def input_page():
         excel = fastq.excel('uploads/dataset.xlsx')
         excel.parse_for_db(use_json=False)
         values = excel.values
-        server = mariaDB(host, username, password, database)
+        server = mariadb(host, username, password, database)
         server.mass_insert(values,
                            'DNA_seq',
                            ["ID", "seq_header", "quality", "sequence"])
@@ -174,7 +182,7 @@ def search():
 def search_results():
     """
     Search results page.
-    Displays results from search.
+    Display results from search.
     :return: rendered template search_results.html
     author: David, Jalmar
     """
@@ -193,7 +201,7 @@ def page_not_found(e):
     :return: rendered template 404.html
     author: David, Jalmar
     """
-    return render_template('404.html', title='404'), 404
+    return render_template('404.html', title='404', error=e), 404
 
 
 if __name__ == '__main__':
@@ -201,3 +209,10 @@ if __name__ == '__main__':
     Runs the app.
     """
     app.run(debug=True)
+
+
+def run():
+    """
+    Runs the app.
+    """
+    app.run()

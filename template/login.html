@@ -2,16 +2,16 @@
 {% from 'bootstrap5/form.html' import render_form,render_form_row %}
 
 
-
 {% block title %}
 Log in
 {% endblock %}
 
 
 {% block content %}
-<div class="container" align="center" >
+<div class="container">
     <div class="form-floating">
         <div class="form-floating">
+            <h1>{{ message }}</h1>
             {{ render_form(form, button_style = "success", button_size="block") }}
         </div>
     </div>

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{title}}</title>
     {% block js %}{% endblock %}
     <link rel="icon" type="image/png" href="../static/image/favicon.png">
-    <link rel="stylesheet" href={% block css %} "../static/login_base.css" {% endblock %}>
+    <link rel="stylesheet" href= {% block css %} "../static/login_base.css" {% endblock %}>
 
 </head>
 <body>
@@ -41,7 +41,7 @@
 <bar1>
     <h1>{{title}}</h1>
     <button_home class="home-button" onclick="location.href='/home/'">
-        <img src="../static/image/logo_cource_4.png">
+        <img src="../static/image/logo_course_4.png" alt="home">
     </button_home>
 </bar1>
 
