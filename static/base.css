@@ -151,8 +151,17 @@ ol {
     font-family: Arial, serif;
     text-align: left;
     margin-top: 1%;
+    margin-bottom: 1%;
     padding-left: 12%;
     padding-right: 10%;
+}
+ul {
+    font-size: 2.5vh;
+    color: #e7e7e7;
+    font-family: Arial, serif;
+    text-align: left;
+    margin-top: 1%;
+    margin-bottom: 1%;
 }
 .scroll {
     overflow-y: scroll;
@@ -197,7 +206,7 @@ ol {
     padding: 8px;
     position: absolute;
     z-index: 1;
-    left: 10%;
+    left: -90%;
     margin-left: -80px;
 }
 
@@ -212,7 +221,7 @@ ol {
     position: absolute;
     z-index: 1;
     bottom: 125%;
-    left: 10%;
+    left: -90%;
     margin-left: -80px;
 }
 
