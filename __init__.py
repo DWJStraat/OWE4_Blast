@@ -64,16 +64,14 @@ def login():
     author: David, Jalmar
     """
     cookies = request.cookies
+    log_in = LoginForm()
     if 'username' in cookies and 'password' in cookies:
         log_out = Logout()
         if log_out.validate_on_submit():
-            resp = make_response(render_template('logout.html',
-                                                 form=log_out,
-                                                 message='You are logged out. '
-                                                         'Refresh '
-                                                         'the page or press '
-                                                         'the button to '
-                                                         'log in again'))
+            resp = make_response(render_template('login.html',
+                                                 form=log_in,
+                                                 title='Login',
+                                                 message=''))
             resp.delete_cookie('username')
             resp.delete_cookie('password')
             resp.delete_cookie('database')
@@ -84,7 +82,6 @@ def login():
                                message='You are logged in. Press the '
                                        'button to log out')
     else:
-        log_in = LoginForm()
         if log_in.validate_on_submit():
             username = log_in.username.data
             # username = str(hash(username))
