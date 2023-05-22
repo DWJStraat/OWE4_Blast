@@ -206,4 +206,4 @@ def run():
     """
     Runs the app.
     """
-    app.run(debug=True)
+    app.run()
