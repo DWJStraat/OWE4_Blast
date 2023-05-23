@@ -12,7 +12,8 @@ from flask import Flask, \
     render_template, \
     make_response, \
     redirect, \
-    url_for
+    url_for, \
+    session
 from flask_bootstrap import Bootstrap5
 from forms import *
 from middle_tier import fastq_parser as fastq
@@ -178,6 +179,19 @@ def search():
     if 'username' not in cookies or 'password' not in cookies:
         return redirect(url_for('login'))
     if form.validate_on_submit():
+        session['organism'] = form.orgname.data
+        session['protein'] = form.protname.data
+        session['header'] = form.header.data
+        session['sequence'] = form.seq.data
+        if form.eval_threshold.data == '':
+            session['e_val'] = '0'
+        else:
+            session['e_val'] = form.eval_threshold.data
+
+        if form.query_coverage.data == '':
+            session['query_coverage'] = '0'
+        else:
+            session['query_coverage'] = form.query_coverage.data
         return redirect(url_for('search_results'))
     return render_template('search.html', title='Search', form=form)
 
@@ -190,7 +204,30 @@ def search_results():
     :return: rendered template search_results.html
     author: David, Jalmar
     """
-    results = ['aaa', 'bbb', 'ccc', 'dd', 'eee']
+    parameters = json.loads('{'
+                            '"organism": "' + session['organism'] + '",'
+                            '"protein": "' + session['protein'] + '",'
+                            '"header": "' + session['header'] + '",'
+                            '"sequence": "' + session['sequence'] + '",'
+                            '"e_val": "' + session['e_val'] + '",'
+                            '"query_coverage": "' + session['query_coverage'] + '"'
+                            '}')
+
+    cookies = request.cookies
+    if 'username' not in cookies or 'password' not in cookies:
+        return redirect(url_for('login'))
+    username = cookies['username']
+    password = cookies['password']
+    database = cookies['database']
+    host = config['DB_IP']
+    server = mariadb(host, username, password, database)
+    parameter = f'Br0.org_name LIKE "%{parameters["organism"]}%" ' \
+                f'AND Br0.Prot_name LIKE "%{parameters["protein"]}%" ' \
+                f'AND Br0.seq_header LIKE "%{parameters["header"]}%" ' \
+                f'AND Br0.sequence LIKE "%{parameters["sequence"]}%" ' \
+                f'AND Br0.e_val <= {parameters["e_val"]} ' \
+                f'AND Br0.Query_cover >= {parameters["query_coverage"]}'
+    results = server.search('*', parameter)
     return render_template('search_results.html',
                            title='Search results',
                            result_list=results)

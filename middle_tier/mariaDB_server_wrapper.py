@@ -1,4 +1,5 @@
 import mariadb
+import os.path
 
 
 class server():
@@ -6,6 +7,7 @@ class server():
     This class is a wrapper for the mariadb library.
     It is used to connect to a mariadb server and execute queries.
     """
+
     def __init__(self, host, user, password, database, port=3306):
         """
         :param host: The host of the server
@@ -69,6 +71,7 @@ class server():
         This function closes the cursor
         """
         self.cursor.close()
+
     def open(self):
         self.connect()
         self.getCursor()
@@ -132,38 +135,38 @@ class server():
             table_id = -1
         return table_id + 1
 
-    # def search(self, columns_to_select, parameters):
-    #     """
-    #     This function searches the database for a specific value
-    #     :param columns_to_select: The columns to select
-    #     :param parameters: The parameters to search for
-    #     :return value: The resulting values
-    #     """
-    #     # Generates a table with all the information needed to display the results, which can be used to search through
-    #     table =
-    #     query = f"SELECT {columns_to_select} FROM {table} WHERE {parameters};"
-    #     return self.query(query)
-
-    def enter_into_DB(self, json_data, enter_dna_seq = False, enter_responsible_machine=False, enter_process=False):
+    def search(self, columns_to_select, parameters):
         """
-        This function enters the data into the database
+        This function searches the database for a specific value
+        :param columns_to_select: The columns to select
+        :param parameters: The parameters to search for
+        :return value: The resulting values
         """
-        for entry_id in json_data:
-            for hit in entry_id:
-                for hsp in entry_id:
-                    hit_def = hit["hit_def"].split(" ")
-                    name = hit_def[1]
-                    genus = hit_def[0]
-                    accession = hit["acc"]
-                    e_value = hsp["e_val"]
-                    hit_len = hit["hit_len"]
-                    score = hsp["score"]
-                    query_end = hsp["query_end"]
-                    query_star = hsp["query_start"]
-                    bit_score = hsp["bit_score"]
+        # Generates a table with all the information needed to display the results, which can be used to search through
+        with open(os.path.split(os.path.dirname(__file__))[0] + r"\database\search.sql", "r") as f:
+            table = f.read()
+        query = f"SELECT {columns_to_select} FROM ({table}) as Br0 WHERE {parameters};"
+        return self.query(query)
 
+    # def enter_into_DB(self, json_data, enter_dna_seq = False, enter_responsible_machine=False, enter_process=False):
+    #     """
+    #     This function enters the data into the database
+    #     """
+    #     for entry_id in json_data:
+    #         for hit in entry_id:
+    #             for hsp in entry_id:
+    #                 hit_def = hit["hit_def"].split(" ")
+    #                 name = hit_def[1]
+    #                 genus = hit_def[0]
+    #                 accession = hit["acc"]
+    #                 e_value = hsp["e_val"]
+    #                 hit_len = hit["hit_len"]
+    #                 score = hsp["score"]
+    #                 query_end = hsp["query_end"]
+    #                 query_star = hsp["query_start"]
+    #                 bit_score = hsp["bit_score"]
 
 
 if __name__ == '__main__':
     test = server("145.74.104.144", "100006", "DeleteSys32", "A100006")
-    test.connect()
+    print(test.search('test', 'test'))
