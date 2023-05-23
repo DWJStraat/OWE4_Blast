@@ -4,6 +4,8 @@ Created on 12-apr-2023 by David
 Collaborators: David, Douwe, Jalmar
 Last modified on 12-apr-2023 by David
 """
+
+import contextlib
 import secrets
 from flask import Flask, \
     request, \
@@ -87,6 +89,8 @@ def login():
             # database = str(hash(database))
             server = mariadb(config['DB_IP'], username, password, database)
             connection = server.connect()
+            with contextlib.suppress(Exception):
+                server.disconnect()
             if connection is True:
                 resp = make_response(redirect(url_for('home')))
                 resp.set_cookie('username', username)

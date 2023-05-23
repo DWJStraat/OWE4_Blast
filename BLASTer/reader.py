@@ -62,7 +62,7 @@ class Reader:
                 if len(self.results[file_id]) == 0:
                     self.results[file_id] = None
 
-    def save_results(self, delete=True):
+    def export(self, delete=True):
         """
         This function saves the results in a json file
         :param delete: Boolean, if True the xml files will be deleted. Default is True
