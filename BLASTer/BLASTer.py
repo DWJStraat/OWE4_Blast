@@ -30,7 +30,7 @@ class BLASTer:
         self.debug = debug
         self.blast_results = json.loads("{}")
         self.config = json.load(open("config.json", "r"))
-        self.server = MariaDB.server(
+        self.server = MariaDB.Server(
             self.config["host"],
             self.config["user"],
             self.config["password"],

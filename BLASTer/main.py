@@ -4,8 +4,11 @@ Created on 17-may-2023 by David
 Collaborators: David
 Last modified on 17-may-2023 by David
 """
+import json
+
 from BLASTer import BLASTer as BLASTer
-from reader import Reader as reader
+from reader import Reader
+from filler import MassFiller
 
 
 def main():
@@ -23,7 +26,7 @@ def main():
     # This part is for reading the output of the BLASTs.
     do_read_input = input("Do you want to start a read? (y/n): ")
     if do_read_input == "y":
-        read = reader()
+        read = Reader()
         print('Finished reading.')
         do_export = input("Do you want to export the results to a JSON file? (y/n): ")
         if do_export == "y":
@@ -34,6 +37,25 @@ def main():
                 read.export(False)
     else:
         print("No read started.")
+    do_import = input("Do you want to import the results from a JSON file? (y/n): ")
+    if do_import == "y":
+        file_name = input("Please enter the name of the file you want to import: ")
+        try:
+            results = file_name
+        except FileNotFoundError:
+            print("File not found.")
+            return
+    else:
+        print("No import started.")
+        results = None
+    if results is not None:
+        do_enter = input("Do you want to enter the results into the database? (y/n): ")
+        if do_enter == "y":
+            filler = MassFiller(results, open("config.json", "r"))
+            filler.run()
+            print("Finished entering.")
+        else:
+            print("No entering started.")
     print("Program finished.")
 
 

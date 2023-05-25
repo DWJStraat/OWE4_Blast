@@ -8,6 +8,7 @@ Last modified on 22-may-2023 by David
 import os
 from Bio.Blast import NCBIXML
 import json
+import time
 
 
 class Reader:
@@ -67,10 +68,8 @@ class Reader:
         This function saves the results in a json file
         :param delete: Boolean, if True the xml files will be deleted. Default is True
         """
-        with open("results.json", "w") as f:
-            results = json.load(f)
-            results.update(self.results)
-            json.dump(results, f)
+        with open(f"results{int(time.time())}", "x") as f:
+            json.dump(self.results, f)
         if delete:
             for file in self.files:
                 os.remove(file)

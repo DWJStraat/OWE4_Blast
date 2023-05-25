@@ -17,7 +17,7 @@ from flask import Flask, \
 from flask_bootstrap import Bootstrap5
 from forms import *
 from middle_tier import fastq_parser as fastq
-from middle_tier.mariaDB_server_wrapper import server as mariadb
+from middle_tier.mariaDB_server_wrapper import Server as mariadb
 import json
 
 app = Flask(__name__, template_folder='template')

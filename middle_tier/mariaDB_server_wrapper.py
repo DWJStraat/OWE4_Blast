@@ -2,7 +2,7 @@ import mariadb
 import os.path
 
 
-class server():
+class Server:
     """
     This class is a wrapper for the mariadb library.
     It is used to connect to a mariadb server and execute queries.
@@ -133,7 +133,7 @@ class server():
         table_id = self.query(f"SELECT MAX(id) FROM {table};")[0][0]
         if table_id is None:
             table_id = -1
-        return table_id + 1
+        return int(table_id + 1)
 
     def search(self, columns_to_select, parameters):
         """
@@ -168,5 +168,5 @@ class server():
 
 
 if __name__ == '__main__':
-    test = server("145.74.104.144", "100006", "DeleteSys32", "A100006")
+    test = Server("145.74.104.144", "100006", "DeleteSys32", "A100006")
     print(test.search('test', 'test'))
