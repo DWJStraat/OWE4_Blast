@@ -1,5 +1,4 @@
 {%extends 'base.html'%}
-
 {% block content %}
 <table>
     <tr>
@@ -9,14 +8,7 @@
         <th>Protein</th>
         <th>E-value</th>
     </tr>
-{% for result in result_list %}
-    <div class="container">
-        <p>
-            {{result}}
-        </p>
-
-    </div>
-    {% endfor %}
+    {{table}}
 </table>
 {% endblock content %}
 ```
