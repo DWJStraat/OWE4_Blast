@@ -129,7 +129,22 @@ class Server:
         query = f"{query[:-2]};"
         self.query(query, commit=True)
 
-    def get_ID(self, table):
+    def get_ID(self, table, collumn=None, value=None):
+        """
+        This function gets the next ID for a table
+        :param value:
+        :param collumn:
+        :param table:
+        :return:
+        """
+        if collumn is not None and value is not None:
+            print(type(value))
+            query = f"SELECT MAX(id) FROM {table} WHERE {collumn} = '{value}';"
+            value = self.query(query)[0][0]
+            if value is []:
+                pass
+            else:
+                return value
         table_id = self.query(f"SELECT MAX(id) FROM {table};")[0][0]
         if table_id is None:
             table_id = -1

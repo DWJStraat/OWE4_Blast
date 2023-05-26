@@ -28,8 +28,10 @@ class Filler(Entrez):
         This method inserts the protein name into the database
         """
         name = self.name
-        self.prot_name_id = int(self.server.get_ID('Prot_name'))
-        query = f"INSERT INTO Prot_name VALUES ({self.prot_name_id}, '{name}')"
+        self.prot_name_id = int(self.server.get_ID('Prot_name', 'Name', name))
+        query = f"IF (SELECT COUNT(*) FROM Prot_name WHERE Name = '{name}') " \
+                f"= 0 THEN INSERT INTO Prot_name VALUES ({self.prot_name_id}, '{name}');" \
+                f"END IF;"
         print(query)
         self.server.query(query, commit=True)
 
@@ -37,24 +39,34 @@ class Filler(Entrez):
         """
         This method inserts the protein into the database
         """
-        self.prot_id = int(self.server.get_ID('Protein'))
-        query = f"INSERT INTO Protein VALUES ({self.prot_id}, {self.prot_name_id})"
+        self.prot_id = int(self.server.get_ID('Protein', 'prot_name_id', self.prot_name_id))
+        query = f"IF (SELECT COUNT(*) FROM Protein WHERE prot_name_id = {self.prot_name_id}) " \
+                f"= 0 THEN INSERT INTO Protein VALUES ({self.prot_id}, {self.prot_name_id});" \
+                f"END IF;"
         self.server.query(query, commit=True)
 
-    def genus(self):
+    def fill_genus(self):
         """
         This method inserts the genus into the database
         """
-        self.genus_id = int(self.server.get_ID('Genus'))
-        query = f"INSERT INTO genus VALUES ({self.genus_id}, '{self.genus}')"
+        self.genus_id = int(self.server.get_ID('genus', 'Name', self.genus))
+        query = f"IF (SELECT COUNT(*) FROM genus WHERE Name = '{self.genus}') " \
+                f"= 0 THEN INSERT INTO Prot_name VALUES ({self.genus_id}, '{self.genus}');" \
+                f"END IF;"
         self.server.query(query, commit=True)
 
-    def species(self):
+    def fill_species(self):
         """
         This method inserts the species into the database
         """
-        self.organism_id = int(self.server.get_ID('Species'))
-        query = f"INSERT INTO Organism VALUES ({self.organism_id}, '{self.species}', {self.genus_id})"
+        self.organism_id = int(self.server.get_ID('Organism', 'Name', self.species))
+        if self.genus_id is None:
+            self.fill_genus()
+        if self.species is None:
+            self.species = 'Unknown'
+        query = f"IF (SELECT COUNT(*) FROM Organism WHERE Name = '{self.species}' AND genus_ID = {self.genus_id} ) " \
+                f"= 0 THEN INSERT INTO Organism VALUES ({self.organism_id}, '{self.species}', {self.genus_id});" \
+                f"END IF;"
         self.server.query(query, commit=True)
 
     def BLAST_result(self, e_val, id_perc, query_cover, acc_len, max_score, total_score):
@@ -68,6 +80,10 @@ class Filler(Entrez):
         :param total_score: total score
         """
         self.BLAST_result_id = int(self.server.get_ID('BLAST_result'))
+        if self.organism_id is None:
+            self.organism_id = 'NULL'
+        if self.prot_id is None:
+            self.prot_id = 'NULL'
         query = f"INSERT INTO BLAST_result VALUES ({self.BLAST_result_id}, " \
                 f"{e_val}," \
                 f"{id_perc}," \
@@ -75,7 +91,7 @@ class Filler(Entrez):
                 f"{acc_len}," \
                 f"{max_score}," \
                 f"{total_score}," \
-                f"{self.acc_code}," \
+                f"'{self.acc_code}'," \
                 f"{self.seq_id}," \
                 f"{self.prot_id}," \
                 f"{self.organism_id})"
@@ -90,6 +106,14 @@ class Filler(Entrez):
         print(query)
         self.seq_id = int(self.server.query(query)[0][0])
 
+    def fill_organism(self):
+        self.fill_genus()
+        self.fill_species()
+
+    def fill_protein(self):
+        self.prot_name()
+        self.protein()
+
     def fill(self, e_val, id_perc, query_cover, acc_len, max_score, total_score):
         """
         This method fills the database with the data from the given data
@@ -101,12 +125,9 @@ class Filler(Entrez):
         :param total_score:
         """
         self.get_seq_id()
-        self.prot_name()
-        self.protein()
-        self.genus()
-        self.species()
+        self.fill_organism()
+        self.fill_protein()
         self.BLAST_result(e_val, id_perc, query_cover, acc_len, max_score, total_score)
-
 
 class MassFiller():
     def __init__(self, json_file, config_file):
@@ -140,9 +161,9 @@ class MassFiller():
                         e_val = hsp['e_val']
                         id_perc = hsp['identity']
                         query_cover = hsp['query_cover']
-                        acc_len = hsp['acc_len']
-                        max_score = hsp['max_score']
-                        total_score = hsp['total_score']
+                        acc_len = hsp['hit_len']
+                        max_score = hsp['score']
+                        total_score = hsp['bit_score']
                         print('Creating filler')
                         filler = Filler(acc_code, self.config['host'], self.config['user'], self.config['password'],
                                         self.config['database'], process_id)
