@@ -311,3 +311,18 @@ td {
     color: #e7e7e7;
     border: 1.5px solid #555;
 }
+
+#translate {
+    display: flex;
+    max-height: 100%;
+    width: 2%;
+    position: absolute;
+    top: 2%;
+    overflow: hidden;
+    background: #76747c;
+    border: none;
+}
+#translate img {
+    max-height: 90%;
+    width: 100%;
+}
