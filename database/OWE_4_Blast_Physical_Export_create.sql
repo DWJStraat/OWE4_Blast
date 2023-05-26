@@ -1,17 +1,17 @@
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2023-05-11 10:46:54.567
+-- Last modification date: 2023-05-26 08:26:52.92
 
 -- tables
 -- Table: BLAST_result
 CREATE TABLE BLAST_result (
     ID int NOT NULL,
-    E_val int NOT NULL,
-    Identity_percentage decimal(5,2) NOT NULL,
-    Query_cover decimal(5,2) NOT NULL,
-    Acc_len int NOT NULL,
-    Max_score int NOT NULL,
-    Total_score int NOT NULL,
-    Accession_code varchar(30) NOT NULL,
+    E_val int NULL,
+    Identity_percentage decimal(5,2) NULL,
+    Query_cover decimal(5,2) NULL,
+    Acc_len int NULL,
+    Max_score int NULL,
+    Total_score int NULL,
+    Accession_code varchar(30) NULL,
     DNA_seq_ID int NOT NULL,
     Protein_ID int NOT NULL,
     Organism_ID int NOT NULL,
