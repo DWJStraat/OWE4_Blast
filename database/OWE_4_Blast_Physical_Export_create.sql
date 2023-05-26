@@ -1,13 +1,13 @@
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2023-05-26 08:26:52.92
+-- Last modification date: 2023-05-26 13:54:23.862
 
 -- tables
 -- Table: BLAST_result
 CREATE TABLE BLAST_result (
     ID int NOT NULL,
-    E_val int NULL,
+    E_val varchar(32) NULL,
     Identity_percentage decimal(5,2) NULL,
-    Query_cover decimal(5,2) NULL,
+    Query_cover varchar(32) NULL,
     Acc_len int NULL,
     Max_score int NULL,
     Total_score int NULL,
