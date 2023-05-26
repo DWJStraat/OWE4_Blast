@@ -18,7 +18,7 @@ bar1 {
     top: 0;
     left: 0;
     z-index: 1;
-    background-image: url("../static/image/background.png");
+    background-image: url("../image/background.png");
 }
 
 bar2 {

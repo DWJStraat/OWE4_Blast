@@ -6,7 +6,7 @@
     <title>{{title}}</title>
     {% block js %}{% endblock %}
     <link rel="icon" type="image/png" href="../static/image/favicon.png">
-    <link rel="stylesheet" href= {% block css %} "../static/login_base.css" {% endblock %}>
+    <link rel="stylesheet" href= {% block css %} "../static/css/login_base.css" {% endblock %}>
 
 </head>
 <body>
@@ -38,6 +38,7 @@
 </body>
 {% block bar2 %}
 {% endblock %}
+
 <bar1>
     <h1>{{title}}</h1>
     <button_home class="home-button" onclick="location.href='/home/'">
@@ -56,6 +57,6 @@
 <!--        };-->
 <!--        timer();-->
 <!--    </script>-->
-
 </field>
+<button onclick="topFunction()" id="button_to_top" title="Go to top">Top</button>
 </html>
