@@ -229,14 +229,26 @@ def search_results():
                 f'AND Br0.e_val <= {parameters["e_val"]} ' \
                 f'AND Br0.Query_cover >= {parameters["query_coverage"]}'
     results = server.search('*', parameter)
-    mytuple = results
-    df = pd.DataFrame(data=mytuple, columns=['name1', 'name2', 'name3', 'name4', 'name5', 'name6', 'name7', 'name8',
-                                             'name9', 'name10', 'name11', 'name12', 'name13'])
-    html_string = df.to_html()
-
+    result_list = json.loads('{}')
+    for result in results:
+        result_list[result[11]] = {
+            'id': result[0],
+            'e_value': result[1],
+            'identity_percentage': result[2],
+            'query_cover': result[3],
+            'accession_length': result[4],
+            'max_score': result[5],
+            'total_score': result[6],
+            'accession': result[7],
+            'organism': f'{result[9]} {result[8]}',
+            'protein': result[10],
+            'header': result[11],
+            'sequence': result[12],
+        }
+        print(result_list)
     return render_template('search_results.html',
                            title='Search results',
-                           result_list=html_string)
+                           results=result_list)
 
 
 @app.errorhandler(404)
