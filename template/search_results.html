@@ -7,8 +7,26 @@
         <th>Organism</th>
         <th>Protein</th>
         <th>E-value</th>
+        <th>Max score</th>
+        <th>Total score</th>
+        <th>Query cover</th>
+        <th>Percentage identity</th>
+        <th>NCBI accession code</th>
     </tr>
-    {{table}}
+    {% for result in results %}
+    <tr>
+        <td>{{results[result]['id']}}</td>
+        <td>{{results[result]['header']}}</td>
+        <td>{{results[result]['organism']}}</td>
+        <td>{{results[result]['protein']}}</td>
+        <td>{{results[result]['e_value']}}</td>
+        <td>{{results[result]['max_score']}}</td>
+        <td>{{results[result]['total_score']}}</td>
+        <td>{{results[result]['query_cover']}}</td>
+        <td>{{results[result]['identity_percentage']}}</td>
+        <td>{{results[result]['accession']}}</td>
+    </tr>
+    {% endfor %}
 </table>
     <button onclick="topFunction()" id="button_to_top" title="Go to top">Top</button>
 {% endblock content %}
