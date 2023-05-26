@@ -125,6 +125,13 @@ p {
     padding-right: 10%;
 }
 
+h2.English .show {
+    visibility: visible;
+}
+p.Binary .hide {
+    visibility: hidden;
+}
+
 b1 {
     font-size: 3vh;
     color: #e7e7e7;
@@ -315,7 +322,7 @@ td {
 #translate {
     display: flex;
     max-height: 100%;
-    width: 2%;
+    width: 3%;
     position: absolute;
     top: 2%;
     overflow: hidden;
