@@ -18,7 +18,7 @@ bar1 {
     top: 0;
     left: 0;
     z-index: 1;
-    background-image: url("../static/image/background.png");
+    background-image: url("../image/background.png");
 }
 
 field {
@@ -105,4 +105,24 @@ h2 {
     text-align: center;
     margin-top: 1%;
     padding: 2%;
+}
+
+#button_to_top {
+  display: none; /* Hidden by default */
+  position: fixed; /* Fixed/sticky position */
+  bottom: 1%; /* Place the button at the bottom of the page */
+  right: 1%; /* Place the button 30px from the right */
+  z-index: 99; /* Make sure it does not overlap */
+  border: none; /* Remove borders */
+  outline: none; /* Remove outline */
+  background-color: red; /* Set a background color */
+  color: white; /* Text color */
+  cursor: pointer; /* Add a mouse pointer on hover */
+  padding: 15px; /* Some padding */
+  border-radius: 10px; /* Rounded corners */
+  font-size: 18px; /* Increase font size */
+}
+
+#button_to_top:hover {
+  background-color: #555; /* Add a dark-grey background on hover */
 }
