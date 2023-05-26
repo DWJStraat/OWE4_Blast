@@ -265,7 +265,7 @@ ul {
     to {opacity:1 ;}
 }
 
-#button_to_top_home {
+#button_to_top {
   display: inherit; /* Hidden by default */
   position: fixed; /* Fixed/sticky position */
   bottom: 1%; /* Place the button at the bottom of the page */
@@ -280,13 +280,13 @@ ul {
   border-radius: 10px; /* Rounded corners */
 }
 
-#button_to_top_home img {
+#button_to_top img {
     max-width: 100%;
     height: auto;
     margin-right: 10px;
     transform: rotate(90deg) translate(20%, -8%);
 }
 
-#button_to_top_home:hover {
+#button_to_top:hover {
   background-color: #555; /* Add a dark-grey background on hover */
 }
