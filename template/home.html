@@ -5,16 +5,15 @@
 {% endblock %}
 
 {% block content %}
-    <button onclick="translate()" id="translate" title="translate_button">
+    <button id="translate" onclick="toggleParagraphContent()" title="translate_button">
         <img src="../static/image/translate_FILL0_wght400_GRAD0_opsz48.png">
     </button>
-    <H2 id="Binary">01010111 01100101 01101100 01100011 01101111 01101101 01100101 00100000 01110100 01101111 00100000
+    <H2 id="HeadingHomeText">01010111 01100101 01101100 01100011 01101111 01101101 01100101 00100000 01110100 01101111 00100000
         01110100 01101000 01100101 00100000 01001110 01100111 01110111 01100101 01101110 01100101 01110011 01101001
         01110100 01100011 00100000 01100100 01100101 01110000 01100001 01110010 01110100 01101101 01100101 01101110
         01110100 00100000 01101111 01100110 00100000 01000111 01101110 01100101 01101110 00100000 01000111 01100101
         01101110 01110011 01100101 00100001 00100000</H2>
-    <H2 id="English">Welcome to the Ngwenesitc department of Gnen Gense! </H2>
-    <p id="Binary">01001110 01100111 01110111 01100101 01101110 01100101 01110011 01101001 01110100 01100011 00100000 01101001
+    <p id="ParagraphHomeText">01001110 01100111 01110111 01100101 01101110 01100101 01110011 01101001 01110100 01100011 00100000 01101001
         01110011 00100000 01100001 00100000 01110111 01100101 01100010 00100000 01100001 01110000 01110000 01101100
         01101001 01100011 01100001 01110100 01101001 01101111 01101110 00100000 01100100 01100101 01110011 01101001
         01100111 01101110 01100101 01100100 00100000 01110100 01101111 00100000 01100001 01110011 01110011 01101001
@@ -128,22 +127,6 @@
         01110100 01100001 01100111 01100101 01101110 01101111 01101101 01101001 01100011 01110011 00101100 00100000
         01100110 01100101 01100101 01101100 00100000 01100110 01110010 01100101 01100101 00100000 01110100 01101111
         00100000 01100001 01110011 01101011 00100001</p>
-    <p id="English">
-        Ngwenesitc is a web application designed to assist in the identification and analysis of metagenomic DNA
-        sequences. Metagenomics involves studying genetic material obtained directly from environmental samples, such
-        as soil or water, rather than from individual organisms. This approach allows for exploring the diversity and
-        function of microbial communities and finds applications in various fields like environmental science,
-        biotechnology, and medicine.<br>
-        The purpose of the Ngwenesitc department is to utilize advanced algorithms and databases to analyze metagenomic
-        sequences, determining their taxonomic and functional origins. The web application provides an easy-to-use
-        interface for uploading sequences, performing comprehensive analyses, and generating visualizations of the
-        results. It is a valuable tool for researchers and professionals working with metagenomic data.<br>
-        Whether you're a microbiologist studying microbial communities in your local environment or a bioinformatics
-        researcher exploring metagenomics for drug discovery, the Ngwenesitc department of Gnen Gense offers the
-        necessary tools and resources to make the most of your data. It aims to empower users with the power of
-        metagenomics analysis. If you have any specific questions or need assistance with anything related to the
-        Ngwenesitc department or metagenomics, feel free to ask!
-    </p>
 {% endblock %}
 {% block top_button %}
     <button onclick="topFunction()" id="button_to_top" title="Go to top">
