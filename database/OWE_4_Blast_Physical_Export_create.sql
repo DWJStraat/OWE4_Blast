@@ -1,10 +1,10 @@
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2023-05-26 13:54:23.862
+-- Last modification date: 2023-05-29 10:19:50.436
 
 -- tables
 -- Table: BLAST_result
 CREATE TABLE BLAST_result (
-    ID int NOT NULL,
+    ID int NOT NULL AUTO_INCREMENT,
     E_val varchar(32) NULL,
     Identity_percentage decimal(5,2) NULL,
     Query_cover varchar(32) NULL,
@@ -20,7 +20,7 @@ CREATE TABLE BLAST_result (
 
 -- Table: DNA_seq
 CREATE TABLE DNA_seq (
-    ID int NOT NULL,
+    ID int NOT NULL AUTO_INCREMENT,
     seq_header char(120) NOT NULL,
     quality varchar(10000) NOT NULL,
     sequence varchar(10000) NOT NULL,
@@ -29,7 +29,7 @@ CREATE TABLE DNA_seq (
 
 -- Table: Organism
 CREATE TABLE Organism (
-    ID int NOT NULL,
+    ID int NOT NULL AUTO_INCREMENT,
     Name varchar(256) NOT NULL,
     genus_ID int NOT NULL,
     CONSTRAINT Organism_pk PRIMARY KEY (ID)
@@ -37,7 +37,7 @@ CREATE TABLE Organism (
 
 -- Table: Process
 CREATE TABLE Process (
-    ID int NOT NULL,
+    ID int NOT NULL AUTO_INCREMENT,
     Status int NOT NULL,
     DNA_seq_ID int NOT NULL,
     Responsible_Machine_ID int NOT NULL,
@@ -46,21 +46,21 @@ CREATE TABLE Process (
 
 -- Table: Prot_name
 CREATE TABLE Prot_name (
-    ID int NOT NULL,
+    ID int NOT NULL AUTO_INCREMENT,
     Name varchar(256) NOT NULL,
     CONSTRAINT Prot_name_pk PRIMARY KEY (ID)
 );
 
 -- Table: Protein
 CREATE TABLE Protein (
-    ID int NOT NULL,
+    ID int NOT NULL AUTO_INCREMENT,
     Prot_name_ID int NOT NULL,
     CONSTRAINT Protein_pk PRIMARY KEY (ID)
 );
 
 -- Table: Responsible_Machine
 CREATE TABLE Responsible_Machine (
-    ID int NOT NULL,
+    ID int NOT NULL AUTO_INCREMENT,
     IP varchar(20) NOT NULL,
     Name varchar(256) NULL,
     CONSTRAINT Responsible_Machine_pk PRIMARY KEY (ID)
@@ -68,14 +68,14 @@ CREATE TABLE Responsible_Machine (
 
 -- Table: genus
 CREATE TABLE genus (
-    ID int NOT NULL,
+    ID int NOT NULL AUTO_INCREMENT,
     Name varchar(32) NOT NULL,
     CONSTRAINT genus_pk PRIMARY KEY (ID)
 );
 
 -- Table: status_def
 CREATE TABLE status_def (
-    ID int NOT NULL,
+    ID int NOT NULL AUTO_INCREMENT,
     state varchar(12) NOT NULL,
     Process_ID int NOT NULL,
     CONSTRAINT status_def_pk PRIMARY KEY (ID)
