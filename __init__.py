@@ -184,15 +184,6 @@ def search():
         session['protein'] = form.protname.data
         session['header'] = form.header.data
         session['sequence'] = form.seq.data
-        if form.eval_threshold.data == '':
-            session['e_val'] = '0'
-        else:
-            session['e_val'] = form.eval_threshold.data
-
-        if form.query_coverage.data == '':
-            session['query_coverage'] = '0'
-        else:
-            session['query_coverage'] = form.query_coverage.data
         return redirect(url_for('search_results'))
     return render_template('search.html', title='Search', form=form)
 
@@ -209,9 +200,7 @@ def search_results():
                             '"organism": "' + session['organism'] + '",'
                             '"protein": "' + session['protein'] + '",'
                             '"header": "' + session['header'] + '",'
-                            '"sequence": "' + session['sequence'] + '",'
-                            '"e_val": "' + session['e_val'] + '",'
-                            '"query_coverage": "' + session['query_coverage'] + '"'
+                            '"sequence": "' + session['sequence'] + '"'
                             '}')
 
     cookies = request.cookies
@@ -225,9 +214,7 @@ def search_results():
     parameter = f'Br0.org_name LIKE "%{parameters["organism"]}%" ' \
                 f'AND Br0.Prot_name LIKE "%{parameters["protein"]}%" ' \
                 f'AND Br0.seq_header LIKE "%{parameters["header"]}%" ' \
-                f'AND Br0.sequence LIKE "%{parameters["sequence"]}%" ' \
-                f'AND Br0.e_val <= {parameters["e_val"]} ' \
-                f'AND Br0.Query_cover >= {parameters["query_coverage"]}'
+                f'AND Br0.sequence LIKE "%{parameters["sequence"]}%" '
     results = server.search('*', parameter)
     result_list = json.loads('{}')
     for result in results:
