@@ -44,7 +44,7 @@ class BLASTwrapper():
             timestamp = time()
             print(
                 f'{Style.DIM}BLASTing {self.name} against database '
-                f'{self.database} at {timestamp}')
+                f'{self.database} at {timestamp} {Style.RESET_ALL}')
             self.result = NCBIWWW.qblast(self.program, self.database,
                                          self.sequence, alignments=15,
                                          megablast=True,
@@ -54,12 +54,12 @@ class BLASTwrapper():
         else:
             print(
                 f'{Style.DIM}BLASTing {self.name} against database '
-                f'{self.database}')
+                f'{self.database} {Style.RESET_ALL}')
             self.result = open('test.xml', 'r')
 
         print(
             f'{Style.DIM} Finished BLASTing {self.name} against database '
-            f'{self.database}')
+            f'{self.database} {Style.RESET_ALL}')
         print(f'{Style.RESET_ALL}')
         # ws.Beep(1000, 100)
         with open(f'{self.process}.xml', 'x') as f:
