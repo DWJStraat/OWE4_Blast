@@ -103,7 +103,7 @@ class BLASTer:
                                         process=self.process_id, expect=0.05)
         self.blast.blast()
         # self.blast.load_results()
-        self.blast.get_first_x(15)
+        self.blast.get_first_x()
         if not self.debug:
             self.server.query(f'UPDATE Process SET Status = 1 '
                               f'WHERE ID = {self.process_id};', True)
