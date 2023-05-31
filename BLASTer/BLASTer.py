@@ -97,7 +97,7 @@ class BLASTer:
         self.seq = seq_data[3]
         self.header = seq_data[1]
         print(self.seq)
-        self.blast = Blast.BLASTwrapper(self.seq, 'nt', self.header,
+        self.blast = Blast.BLASTwrapper(self.seq, 'nr', self.header,
                                         program='blastx',
                                         debug=self.debug,
                                         process=self.process_id, expect=0.05)
