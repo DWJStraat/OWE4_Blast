@@ -15,7 +15,7 @@ from Bio.Blast import NCBIWWW, NCBIXML
 from colorama import Style
 
 
-class BLASTwrapper():
+class BLASTwrapper:
     """
     This class is a wrapper for the Bio.Blast library.
     """
@@ -23,6 +23,7 @@ class BLASTwrapper():
     def __init__(self, sequence, database, name, debug=False,
                  matrix='BLOSUM62', process=0, program='blastn',
                  expect=10):
+        self.records = None
         self.hits = None
         self.xml = None
         self.result = None
@@ -104,11 +105,10 @@ class BLASTwrapper():
     #
     #     self.hits = hits
 
-    def get_first_x(self, x):
+    def get_first_x(self):
         """
         This function returns the first x results of the blast into
         the self.hits variable
-        :param x:
         """
         self.hits = []
         records = NCBIXML.parse(open(f'{self.process}.xml', 'r'))
@@ -117,6 +117,9 @@ class BLASTwrapper():
         self.hits.extend(iter(records.alignments))
 
     def export_xml(self):
+        """
+        This function exports the xml data to a xml file
+        """
         with open(f'{self.name}.xml', 'w') as f:
             f.write(self.result.read())
             f.close()
@@ -124,8 +127,8 @@ class BLASTwrapper():
 
 if __name__ == '__main__':
     file = open('test.fasta', 'r').read()
-    a = BLASTwrapper(file, 'nt', name='test', matrix='BLOSUM62', expect=0.05)
+    a = BLASTwrapper(file, 'nr', name='test', expect=0.05)
     a.blast()
     a.load_results()
-    a.get_first_x(15)
+    a.get_first_x()
     a.export_xml()
