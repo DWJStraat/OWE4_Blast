@@ -223,6 +223,7 @@ def search_results():
                 f'AND Br0.Query_cover >= {parameters["query_coverage"]}'
     results = server.search('*', parameter)
     result_list = json.loads('{}')
+    print(results)
     for result in results:
         result_list[result[11]] = {
             'id': result[0],
