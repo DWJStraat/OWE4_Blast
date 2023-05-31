@@ -217,6 +217,7 @@ def search_results():
                 f'AND Br0.sequence LIKE "%{parameters["sequence"]}%" '
     results = server.search('*', parameter)
     result_list = json.loads('{}')
+    print(results)
     for result in results:
         result_list[result[11]] = {
             'id': result[0],
