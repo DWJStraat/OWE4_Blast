@@ -25,7 +25,6 @@ class LoginForm(FlaskForm):
     The form also contains a checkbox for the terms of service.
     The form is submitted with the submit button.
 
-    :param FlaskForm: parent class
     :return: rendered template login.html
     author: David
     """
@@ -62,7 +61,6 @@ class UploadForm(FlaskForm):
     to upload a file to the website. The form is submitted with the submit
     button.
 
-    :param FlaskForm: parent class
     :return: rendered template upload.html
     author: David
     """
@@ -79,7 +77,6 @@ class Logout(FlaskForm):
     of the website. It contains one field: submit. The submit field is used
     to log out of the website. The form is submitted with the submit button.
 
-    :param FlaskForm: parent class
     :return: rendered template logout.html
     author: David
     """
@@ -93,7 +90,6 @@ class Login(FlaskForm):
     website. It contains one field: submit. The submit field is used to log in
     to the website. The form is submitted with the submit button.
 
-    :param FlaskForm: parent class
     :return: rendered template login.html
     author: David
     """
@@ -112,7 +108,6 @@ class Search(FlaskForm):
     The header field is used to search for the header in the database.
     The form is submitted with the submit button.
 
-    :param FlaskForm: parent class
     :return: rendered template search.html
     author: David, Douwe, Jalmar
     """

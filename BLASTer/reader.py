@@ -68,7 +68,7 @@ class Reader:
         This function saves the results in a json file
         :param delete: Boolean, if True the xml files will be deleted. Default is True
         """
-        with open(f"results{int(time.time())}", "x") as f:
+        with open(f"results{int(time.time())}.json", "x") as f:
             json.dump(self.results, f)
         if delete:
             for file in self.files:

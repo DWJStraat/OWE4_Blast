@@ -1,3 +1,11 @@
+"""
+This file contains the Server class, which is a wrapper for the mariadb library.
+It is used to connect to a mariadb server and execute queries.
+Created on 2022-04-12 by David
+Collaborators: David
+Last modified on 2022-05-31 by David
+"""
+
 import mariadb
 import os.path
 
@@ -15,6 +23,9 @@ class Server:
         :param password:
         :param database:
         """
+        self.connection = None
+        self.value = None
+        self.cursor = None
         self.host = host
         self.user = user
         self.password = password
@@ -73,6 +84,9 @@ class Server:
         self.cursor.close()
 
     def open(self):
+        """
+        This function opens a connection to the server and creates a cursor
+        """
         self.connect()
         self.getCursor()
 
@@ -97,15 +111,15 @@ class Server:
         try:
             self.cursor.execute(query)
             try:
-                value = self.cursor.fetchall()
+                self.value = self.cursor.fetchall()
             except mariadb.ProgrammingError:
-                value = None
+                self.value = None
             self.close(commit)
         except mariadb.Error as e:
             self.close()
             print(f"Error: {e}\nQuery: {query}")
             raise e
-        return value
+        return self.value
 
     def mass_insert(self, list_of_values, table, columns):
         """
@@ -114,40 +128,24 @@ class Server:
         :param table: the table to insert into
         :param columns: the columns to insert into
         """
-        id = self.query(f"SELECT MAX(id) FROM {table};")[0][0]
-        new_list = []
-        if id is None:
-            id = -1
-        for value in list_of_values:
-            id += 1
-            value = (id,) + value
-            new_list.append(value)
+        new_list = list(list_of_values)
         columns = ", ".join(columns)
         query = f"INSERT INTO {table}({columns}) VALUES "
         for value in new_list:
-            query += f"{value}, "
+            if value != (None, None, None):
+                query += f"{value}, "
         query = f"{query[:-2]};"
         self.query(query, commit=True)
 
-    def get_ID(self, table, collumn=None, value=None):
+    def get_ID(self, table):
         """
         This function gets the next ID for a table
-        :param value:
-        :param collumn:
         :param table:
         :return:
         """
-        if collumn is not None and value is not None:
-            print(type(value))
-            query = f"SELECT MAX(id) FROM {table} WHERE {collumn} = '{value}';"
-            value = self.query(query)[0][0]
-            if value is []:
-                pass
-            else:
-                return value
         table_id = self.query(f"SELECT MAX(id) FROM {table};")[0][0]
         if table_id is None:
-            table_id = -1
+            table_id = 0
         return int(table_id + 1)
 
     def search(self, columns_to_select, parameters):
@@ -183,5 +181,4 @@ class Server:
 
 
 if __name__ == '__main__':
-    test = Server("145.74.104.144", "100006", "DeleteSys32", "A100006")
-    print(test.search('test', 'test'))
+    test = Server("145.74.104.144", "100012", "ph14", "A100012")
