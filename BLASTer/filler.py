@@ -6,7 +6,8 @@ Last modified on 31-may-2023 by David
 """
 
 import json
-
+import sys
+sys.path.insert(0, "../")
 from middle_tier.entrez_wrapper import EntrezWrapper as Entrez
 from middle_tier.mariaDB_server_wrapper import Server as Server
 

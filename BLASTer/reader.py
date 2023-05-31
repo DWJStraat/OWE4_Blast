@@ -4,7 +4,8 @@ Created on 22-may-2023 by David
 Collaborators: David
 Last modified on 22-may-2023 by David
 """
-
+import sys
+sys.path.insert(0, "../")
 import json
 import os
 import time
