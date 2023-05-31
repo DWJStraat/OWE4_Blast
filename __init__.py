@@ -104,7 +104,8 @@ def login():
                                        title='Login',
                                        message='Incorrect username or '
                                                'password')
-        return render_template('login.html', form=log_in, title='Login', message='')
+        return render_template('login.html', form=log_in, title='Login',
+                               message='')
 
 
 @app.route('/cookies/')
@@ -197,15 +198,13 @@ def search_results():
     """
     parameters = json.loads('{'
                             '"organism": "' + session['organism'] + '",'
-                                                                    '"protein": "' + session['protein'] + '",'
-                                                                                                          '"header": "'
-                            + session['header'] + '",'
-                                                  '"sequence": "' + session['sequence'] + '",'
-                                                                                          '"e_val": "' + session[
-                                'e_val']
-                            + '",'
-                              '"query_coverage": "' + session['query_coverage'] + '"'
-                                                                                  '}')
+                            '"protein": "' + session['protein'] + '",'
+                            '"header": "' + session['header'] + '",'
+                            '"sequence": "' + session['sequence'] + '",'
+                            '"e_val": "' + session['e_val'] + '",'
+                            '"query_coverage": "' + session['query_coverage']
+                            + '"'
+                            '}')
 
     cookies = request.cookies
     if 'username' not in cookies or 'password' not in cookies:

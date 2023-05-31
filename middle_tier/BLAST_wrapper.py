@@ -56,6 +56,9 @@ class BLASTwrapper():
             f.write(self.result.read())
 
     def load_results(self):
+        """
+        This function loads the results of the blast into the xml variable
+        """
         results = self.result.read()
         self.result.close()
         results = Et.fromstring(results)
@@ -91,12 +94,15 @@ class BLASTwrapper():
     #     self.hits = hits
 
     def get_first_x(self, x):
+        """
+        This function returns the first x results of the blast into the self.hits variable
+        :param x:
+        """
         self.hits = []
         records = NCBIXML.parse(open(f'{self.process}.xml', 'r'))
         records = next(records)
         self.records = records
-        for alignment in records.alignments:
-            self.hits.append(alignment)
+        self.hits.extend(iter(records.alignments))
 
     def export_xml(self):
         with open(f'{self.name}.xml', 'w') as f:
