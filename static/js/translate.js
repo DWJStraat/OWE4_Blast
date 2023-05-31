@@ -148,14 +148,14 @@ function toggleParagraphContent() { console.log("toggleParagraphContent");
 
 
   console.log(paragraph);
-    if (paragraph.textContent === originalText.paragraph) {
-    paragraph.textContent = newText.paragraph;
-  } else {
+    if (paragraph.textContent === newText.paragraph) {
     paragraph.textContent = originalText.paragraph;
+  } else {
+    paragraph.textContent = newText.paragraph;
   }
-    if (heading.textContent === originalText.heading) {
-    heading.textContent = newText.heading;
-    } else {
+    if (heading.textContent === newText.heading) {
     heading.textContent = originalText.heading;
+    } else {
+    heading.textContent = newText.heading;
     }
 }
