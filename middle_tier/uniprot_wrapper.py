@@ -64,4 +64,3 @@ class Uniprot:
         organism = self.xml.split('<organism>')[1].split('</organism>')[0]
         scientific_name = organism.split('<name type="scientific">')[1].split('</name>')[0]
         return scientific_name.split(' ')[1]
-

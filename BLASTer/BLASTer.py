@@ -79,9 +79,9 @@ class BLASTer:
             self.server.query(query, True)
             seq_data = self.server.query(f'SELECT * FROM DNA_seq WHERE ID = {self.id};')[0]
         else:
-            seq_data = ['1', 'header', 'ATCG', 'quality']
-        self.quality = seq_data[3]
-        self.seq = seq_data[2]
+            seq_data = ['1', 'header', 'quality', 'ATCG']
+        self.quality = seq_data[2]
+        self.seq = seq_data[3]
         self.header = seq_data[1]
         print(self.seq)
         self.blast = Blast.BLASTwrapper(self.seq, 'nt', self.header, debug=self.debug, process=self.process_id)

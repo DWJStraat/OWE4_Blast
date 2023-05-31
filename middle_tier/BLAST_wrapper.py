@@ -1,12 +1,18 @@
+"""
+This file contains the BLASTwrapper class, which is a wrapper for the Bio.Blast library.\
+This class is used to blast a sequence against a database.
+Created on 17-may-2023 by David
+Collaborators: David
+Last modified on 31-may-2023 by David
+"""
 
-
-import json
-from Bio.Blast import NCBIWWW, NCBIXML
-from Bio import SeqIO
-from colorama import Style
-import xml.etree.ElementTree as ET
-import winsound as ws
+import xml.etree.ElementTree as Et
 from time import time
+
+import winsound as ws
+from Bio.Blast import NCBIWWW, NCBIXML
+from colorama import Style
+
 
 class BLASTwrapper():
     """
@@ -47,7 +53,7 @@ class BLASTwrapper():
     def load_results(self):
         results = self.result.read()
         self.result.close()
-        results = ET.fromstring(results)
+        results = Et.fromstring(results)
         self.xml = results
 
     # def get_first_x(self, x):

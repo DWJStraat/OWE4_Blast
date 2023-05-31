@@ -15,7 +15,7 @@ class EntrezWrapper:
     This class is a wrapper for the Entrez module of BioPython and interfaces with the NCBI database
     """
 
-    def __init__(self, acc_code, sleep_between_tries=10, max_tries=10, db = 'nucleotide'):
+    def __init__(self, acc_code, sleep_between_tries=10, max_tries=10, db='nucleotide'):
         self.record = None
         config = json.load(open(Path('../config.json')))
         self.email = config['email']
@@ -25,6 +25,9 @@ class EntrezWrapper:
         self.db = db
 
     def get_entrez(self):
+        """
+        This method fetches the record from the NCBI database
+        """
         time.sleep(0.5)
         print(f'Fetching {self.acc_code}')
         handle = Entrez.efetch(db=self.db,
@@ -86,4 +89,3 @@ class EntrezWrapper:
         :return: str - species of the organism associated with the protein
         """
         return self.get_organism().split(' ')[1].capitalize()
-
