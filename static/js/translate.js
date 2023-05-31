@@ -133,11 +133,11 @@ function toggleParagraphContent() { console.log("toggleParagraphContent");
         "sequences. Metagenomics involves studying genetic material obtained directly from environmental samples, such" +
         "as soil or water, rather than from individual organisms. This approach allows for exploring the diversity and" +
         "function of microbial communities and finds applications in various fields like environmental science," +
-        "biotechnology, and medicine.<br>" +
+        "biotechnology, and medicine." +
         "The purpose of the Ngwenesitc department is to utilize advanced algorithms and databases to analyze metagenomic" +
         "sequences, determining their taxonomic and functional origins. The web application provides an easy-to-use" +
         "interface for uploading sequences, performing comprehensive analyses, and generating visualizations of the" +
-        "results. It is a valuable tool for researchers and professionals working with metagenomic data.<br>" +
+        "results. It is a valuable tool for researchers and professionals working with metagenomic data." +
         "Whether you're a microbiologist studying microbial communities in your local environment or a bioinformatics" +
         "researcher exploring metagenomics for drug discovery, the Ngwenesitc department of Gnen Gense offers the" +
         "necessary tools and resources to make the most of your data. It aims to empower users with the power of" +
