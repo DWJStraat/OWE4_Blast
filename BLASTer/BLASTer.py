@@ -9,7 +9,7 @@ Last modified on 17-may-2023 by David
 import json
 import sys
 
-sys.path.append("../OWE4_Blast/")
+sys.path.insert(0, "../")
 
 from middle_tier import mariaDB_server_wrapper as MariaDB
 from middle_tier import BLAST_wrapper as Blast
