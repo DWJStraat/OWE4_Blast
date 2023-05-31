@@ -166,7 +166,7 @@ def input_page():
         server = MariaDb(host, username, password, database)
         server.mass_insert(values,
                            'DNA_seq',
-                           ["seq_header", "sequence", "quality"])
+                           ["seq_header", "quality", "sequence"])
         return render_template('upload.html',
                                title='Input',
                                form=form,
