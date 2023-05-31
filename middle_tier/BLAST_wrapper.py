@@ -10,7 +10,7 @@ Last modified on 31-may-2023 by David
 import xml.etree.ElementTree as Et
 from time import time
 
-import winsound as ws
+# import winsound as ws
 from Bio.Blast import NCBIWWW, NCBIXML
 from colorama import Style
 
@@ -43,7 +43,8 @@ class BLASTwrapper():
         if not self.debug:
             timestamp = time()
             print(
-                f'{Style.DIM}BLASTing {self.name} against database {self.database} at {timestamp}')
+                f'{Style.DIM}BLASTing {self.name} against database '
+                f'{self.database} at {timestamp}')
             self.result = NCBIWWW.qblast(self.program, self.database,
                                          self.sequence, alignments=15,
                                          megablast=True,
@@ -52,13 +53,15 @@ class BLASTwrapper():
                                          )
         else:
             print(
-                f'{Style.DIM}BLASTing {self.name} against database {self.database}')
+                f'{Style.DIM}BLASTing {self.name} against database '
+                f'{self.database}')
             self.result = open('test.xml', 'r')
 
         print(
-            f'{Style.DIM} Finished BLASTing {self.name} against database {self.database}')
+            f'{Style.DIM} Finished BLASTing {self.name} against database '
+            f'{self.database}')
         print(f'{Style.RESET_ALL}')
-        ws.Beep(1000, 100)
+        # ws.Beep(1000, 100)
         with open(f'{self.process}.xml', 'x') as f:
             f.write(self.result.read())
 
@@ -96,13 +99,15 @@ class BLASTwrapper():
     #                 hsp_num = hsp.find('Hsp_num').text
     #                 hits[run_id][hit_num]['Hit_hsps'][hsp_num] = {}
     #                 for hsp_child in hsp:
-    #                     hits[run_id][hit_num]['Hit_hsps'][hsp_num][hsp_child.tag] = hsp_child.text
+    #                     hits[run_id][hit_num]['Hit_hsps'][hsp_num]
+    #                     [hsp_child.tag] = hsp_child.text
     #
     #     self.hits = hits
 
     def get_first_x(self, x):
         """
-        This function returns the first x results of the blast into the self.hits variable
+        This function returns the first x results of the blast into
+        the self.hits variable
         :param x:
         """
         self.hits = []
