@@ -19,7 +19,8 @@ class BLASTwrapper():
     This class is a wrapper for the Bio.Blast library.
     """
 
-    def __init__(self, sequence, database, name, debug=False, matrix='BLOSUM62', process = 0, program = 'blastx'):
+    def __init__(self, sequence, database, name, debug=False, matrix='BLOSUM62', process = 0, program = 'blastn',
+                 expect = 10):
         self.hits = None
         self.xml = None
         self.result = None
@@ -30,6 +31,7 @@ class BLASTwrapper():
         self.matrix = matrix
         self.process = process
         self.program = program
+        self.expect = expect
 
     def blast(self):
         """
@@ -39,7 +41,10 @@ class BLASTwrapper():
         if not self.debug:
             timestamp = time()
             print(f'{Style.DIM}BLASTing {self.name} against database {self.database} at {timestamp}')
-            self.result = NCBIWWW.qblast(self.program, self.database, self.sequence, alignments=15, megablast=True)
+            self.result = NCBIWWW.qblast(self.program, self.database, self.sequence, alignments=15, megablast=True,
+                                         expect=self.expect
+                                         # , matrix_name=self.matrix,
+            )
         else:
             print(f'{Style.DIM}BLASTing {self.name} against database {self.database}')
             self.result = open('test.xml', 'r')
@@ -100,7 +105,7 @@ class BLASTwrapper():
 
 if __name__ == '__main__':
     file = open('test.fasta', 'r').read()
-    a = BLASTwrapper(file, 'nt', name='test')
+    a = BLASTwrapper(file, 'nt', name='test', matrix='BLOSUM62', expect=0.05)
     a.blast()
     a.load_results()
     a.get_first_x(15)

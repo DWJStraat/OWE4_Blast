@@ -17,9 +17,8 @@ from flask import Flask, \
 from flask_bootstrap import Bootstrap5
 from forms import *
 from middle_tier import fastq_parser as fastq
-from middle_tier.mariaDB_server_wrapper import Server as mariadb
+from middle_tier.mariaDB_server_wrapper import Server as MariaDb
 import json
-import pandas as pd
 
 app = Flask(__name__, template_folder='template')
 app.config['SECRET_KEY'] = secrets.token_urlsafe(16)
@@ -89,7 +88,7 @@ def login():
             # password = str(hash(password))
             database = log_in.database.data
             # database = str(hash(database))
-            server = mariadb(config['DB_IP'], username, password, database)
+            server = MariaDb(config['DB_IP'], username, password, database)
             connection = server.connect()
             with contextlib.suppress(Exception):
                 server.disconnect()
@@ -153,10 +152,10 @@ def input_page():
     if form.validate_on_submit():
         file = form.file.data
         file.save('uploads/dataset.xlsx')
-        excel = fastq.excel('uploads/dataset.xlsx')
+        excel = fastq.Excel('uploads/dataset.xlsx')
         excel.parse_for_db(use_json=False)
         values = excel.values
-        server = mariadb(host, username, password, database)
+        server = MariaDb(host, username, password, database)
         server.mass_insert(values,
                            'DNA_seq',
                            ["ID", "seq_header", "quality", "sequence"])
@@ -184,15 +183,6 @@ def search():
         session['protein'] = form.protname.data
         session['header'] = form.header.data
         session['sequence'] = form.seq.data
-        if form.eval_threshold.data == '':
-            session['e_val'] = '0'
-        else:
-            session['e_val'] = form.eval_threshold.data
-
-        if form.query_coverage.data == '':
-            session['query_coverage'] = '0'
-        else:
-            session['query_coverage'] = form.query_coverage.data
         return redirect(url_for('search_results'))
     return render_template('search.html', title='Search', form=form)
 
@@ -207,12 +197,15 @@ def search_results():
     """
     parameters = json.loads('{'
                             '"organism": "' + session['organism'] + '",'
-                            '"protein": "' + session['protein'] + '",'
-                            '"header": "' + session['header'] + '",'
-                            '"sequence": "' + session['sequence'] + '",'
-                            '"e_val": "' + session['e_val'] + '",'
-                            '"query_coverage": "' + session['query_coverage'] + '"'
-                            '}')
+                                                                    '"protein": "' + session['protein'] + '",'
+                                                                                                          '"header": "'
+                            + session['header'] + '",'
+                                                  '"sequence": "' + session['sequence'] + '",'
+                                                                                          '"e_val": "' + session[
+                                'e_val']
+                            + '",'
+                              '"query_coverage": "' + session['query_coverage'] + '"'
+                                                                                  '}')
 
     cookies = request.cookies
     if 'username' not in cookies or 'password' not in cookies:
@@ -221,7 +214,7 @@ def search_results():
     password = cookies['password']
     database = cookies['database']
     host = config['DB_IP']
-    server = mariadb(host, username, password, database)
+    server = MariaDb(host, username, password, database)
     parameter = f'Br0.org_name LIKE "%{parameters["organism"]}%" ' \
                 f'AND Br0.Prot_name LIKE "%{parameters["protein"]}%" ' \
                 f'AND Br0.seq_header LIKE "%{parameters["header"]}%" ' \
