@@ -6,6 +6,7 @@ Last modified on 12-apr-2023 by David
 """
 
 import contextlib
+import os
 import secrets
 from flask import Flask, \
     request, \
@@ -19,6 +20,7 @@ from forms import *
 from middle_tier import fastq_parser as fastq
 from middle_tier.mariaDB_server_wrapper import Server as MariaDb
 import json
+from os.path import exists
 
 app = Flask(__name__, template_folder='template')
 app.config['SECRET_KEY'] = secrets.token_urlsafe(16)
@@ -150,6 +152,11 @@ def input_page():
     password = cookies['password']
     database = cookies['database']
     host = config['DB_IP']
+    if not exists('uploads'):
+        os.mkdir('uploads')
+    if not exists ('uploads/dataset.xlsx'):
+        with open('uploads/dataset.xlsx', 'w') as file:
+            file.close()
     if form.validate_on_submit():
         file = form.file.data
         file.save('uploads/dataset.xlsx')
@@ -159,7 +166,7 @@ def input_page():
         server = MariaDb(host, username, password, database)
         server.mass_insert(values,
                            'DNA_seq',
-                           ["ID", "seq_header", "quality", "sequence"])
+                           ["seq_header", "quality", "sequence"])
         return render_template('upload.html',
                                title='Input',
                                form=form,

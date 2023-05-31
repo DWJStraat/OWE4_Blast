@@ -15,7 +15,8 @@ def main():
     Main function for the BLASTer program.
     :return: None
     """
-    # This part is for BLASTing all sequences in the database that haven't been blasted yet.
+    # This part is for BLASTing all sequences in the database that haven't
+    # been blasted yet.
     BLAST = BLASTer()
     do_blast_input = input("Do you want to start a BLAST? (y/n): ")
     if do_blast_input == "y":
@@ -32,7 +33,7 @@ def main():
         if do_export == "y":
             do_delete = input("Do you want to delete the XML files? (y/n): ")
             if do_delete == "y":
-                read.export(True)
+                read.export()
             else:
                 read.export(False)
     else:
