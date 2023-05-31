@@ -154,24 +154,36 @@ def input_page():
     host = config['DB_IP']
     if not exists('uploads'):
         os.mkdir('uploads')
-    if not exists ('uploads/dataset.xlsx'):
+    if not exists('uploads/dataset.xlsx'):
         with open('uploads/dataset.xlsx', 'w') as file:
             file.close()
-    if form.validate_on_submit():
-        file = form.file.data
-        file.save('uploads/dataset.xlsx')
-        excel = fastq.Excel('uploads/dataset.xlsx')
-        excel.parse_for_db(use_json=False)
-        values = excel.values
-        server = MariaDb(host, username, password, database)
-        server.mass_insert(values,
-                           'DNA_seq',
-                           ["seq_header", "quality", "sequence"])
+    try:
+        if form.validate_on_submit():
+            file = form.file.data
+            if not file.filename.endswith('.xlsx'):
+                return render_template('upload.html',
+                                       title='Input',
+                                       form=form,
+                                       file=file.filename,
+                                       message='Incorrect file type.')
+            file.save('uploads/dataset.xlsx')
+            excel = fastq.Excel('uploads/dataset.xlsx')
+            excel.parse_for_db(use_json=False)
+            values = excel.values
+            server = MariaDb(host, username, password, database)
+            server.mass_insert(values,
+                               'DNA_seq',
+                               ["seq_header", "quality", "sequence"])
+            return render_template('upload.html',
+                                   title='Input',
+                                   form=form,
+                                   file=file.filename)
+        return render_template('upload.html', title='Input', form=form)
+    except Exception as e:
         return render_template('upload.html',
                                title='Input',
                                form=form,
-                               file=file.filename)
-    return render_template('upload.html', title='Input', form=form)
+                               message=f'Error: {e}')
 
 
 @app.route('/search/', methods=['GET', 'POST'])
@@ -204,13 +216,10 @@ def search_results():
     author: David, Jalmar
     """
     parameters = json.loads('{'
-                            '"organism": "' + session['organism'] + '",'
-                            '"protein": "' + session['protein'] + '",'
-                            '"header": "' + session['header'] + '",'
-                            '"sequence": "' + session['sequence'] + '",'
-                            '"e_val": "' + session['e_val'] + '",'
-                            '"query_coverage": "' + session['query_coverage']
-                            + '"'
+                            f'"organism": {session["organism"]},'
+                            f'"protein": {session["protein"]},'
+                            f'"header": {session["header"]},'
+                            f'"sequence": {session["sequence"]}'
                             '}')
 
     cookies = request.cookies
@@ -224,9 +233,7 @@ def search_results():
     parameter = f'Br0.org_name LIKE "%{parameters["organism"]}%" ' \
                 f'AND Br0.Prot_name LIKE "%{parameters["protein"]}%" ' \
                 f'AND Br0.seq_header LIKE "%{parameters["header"]}%" ' \
-                f'AND Br0.sequence LIKE "%{parameters["sequence"]}%" ' \
-                f'AND Br0.e_val <= {parameters["e_val"]} ' \
-                f'AND Br0.Query_cover >= {parameters["query_coverage"]}'
+                f'AND Br0.sequence LIKE "%{parameters["sequence"]}%" '
     results = server.search('*', parameter)
     result_list = json.loads('{}')
     print(results)
