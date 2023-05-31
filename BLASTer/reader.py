@@ -5,10 +5,11 @@ Collaborators: David
 Last modified on 22-may-2023 by David
 """
 
-import os
-from Bio.Blast import NCBIXML
 import json
+import os
 import time
+
+from Bio.Blast import NCBIXML
 
 
 class Reader:
@@ -31,7 +32,8 @@ class Reader:
 
     def read_files(self):
         """
-        This function reads the xml files and stores the results in a dictionary
+        This function reads the xml files and stores the results in a
+        dictionary
         """
         self.results = json.loads("{}")
         for file in self.files:
@@ -41,7 +43,8 @@ class Reader:
                 records = NCBIXML.parse(f)
                 records2 = next(records)
                 self.results[file_id] = {}
-                # Iterate through the alignments and hsps and store the results in a JSON variable
+                # Iterate through the alignments and hsps and store
+                # the results in a JSON variable
                 for alignment in records2.alignments:
                     self.results[file_id][alignment.hit_def] = {}
                     for hsp in alignment.hsps:
@@ -66,7 +69,8 @@ class Reader:
     def export(self, delete=True):
         """
         This function saves the results in a json file
-        :param delete: Boolean, if True the xml files will be deleted. Default is True
+        :param delete: Boolean, if True the xml files will be deleted.
+        Default is True
         """
         with open(f"results{int(time.time())}.json", "x") as f:
             json.dump(self.results, f)

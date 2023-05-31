@@ -1,21 +1,25 @@
 """
-This module is a wrapper for the Entrez module of BioPython and interfaces with the NCBI database
+This module is a wrapper for the Entrez module of BioPython and
+interfaces with the NCBI database
 Created on 22-may-2023 by David
 Collaborators: David
 Last modified on 22-may-2023 by David
 """
-import Bio.Entrez as Entrez
 import json
-from pathlib import Path
 import time
+from pathlib import Path
+
+import Bio.Entrez as Entrez
 
 
 class EntrezWrapper:
     """
-    This class is a wrapper for the Entrez module of BioPython and interfaces with the NCBI database
+    This class is a wrapper for the Entrez module of BioPython and
+    interfaces with the NCBI database
     """
 
-    def __init__(self, acc_code, sleep_between_tries=10, max_tries=10, db='nucleotide'):
+    def __init__(self, acc_code, sleep_between_tries=10, max_tries=10,
+                 db='nucleotide'):
         self.record = None
         config = json.load(open(Path('../config.json')))
         self.email = config['email']
@@ -78,14 +82,16 @@ class EntrezWrapper:
 
     def get_genus(self):
         """
-        This method returns the genus of the organism associated with the protein
+        This method returns the genus of the organism associated with
+        the protein
         :return: str - genus of the organism associated with the protein
         """
         return self.get_lineage()[-1]
 
     def get_species(self):
         """
-        This method returns the species of the organism associated with the protein
+        This method returns the species of the organism associated with
+        the protein
         :return: str - species of the organism associated with the protein
         """
         return self.get_organism().split(' ')[1].capitalize()

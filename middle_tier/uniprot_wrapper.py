@@ -20,7 +20,8 @@ class Uniprot:
 
     def get_xml(self):
         """
-        This function gets the xml of the protein from the Uniprot API and stores it in self.xml
+        This function gets the xml of the protein from the Uniprot API
+        and stores it in self.xml
         """
         self.xml = requests.get(self.url).text
 
@@ -62,5 +63,6 @@ class Uniprot:
         if self.xml is None:
             self.get_xml()
         organism = self.xml.split('<organism>')[1].split('</organism>')[0]
-        scientific_name = organism.split('<name type="scientific">')[1].split('</name>')[0]
+        scientific_name = organism.split('<name type="scientific">')[1]
+        scientific_name = scientific_name.split('</name>')[0]
         return scientific_name.split(' ')[1]

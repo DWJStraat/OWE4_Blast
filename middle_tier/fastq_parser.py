@@ -1,17 +1,21 @@
 """
-This file is used to parse fastq files and return the data in a format that can be used by the database.
+This file is used to parse fastq files and return the data in
+a format that can be used by the database.
 Created on 10-may-2021 by David
 Collaborators: David
 Last modified on 31-may-2023 by David
 """
-import openpyxl
 import json
+
+import openpyxl
 
 
 class Excel:
     """
-    This class is used to parse fastq files and return the data in a format that can be used by the database.
-    ::param excel_sheet: The excel sheet to be parsed. Has to be a single page.
+    This class is used to parse fastq files and return the data in
+    a format that can be used by the database.
+    ::param excel_sheet: The excel sheet to be parsed.
+    Has to be a single page.
     """
 
     def __init__(self, excel_sheet):
@@ -30,7 +34,8 @@ class Excel:
 
     def parse(self):
         """
-        This method parses the excel sheet and returns the data in a format that can be used by the database.
+        This method parses the excel sheet and returns the data
+        to the variable self.entries.
         """
         for row in self.sheet.iter_rows():
             val = json.loads('{}')
@@ -44,7 +49,8 @@ class Excel:
 
     def parse_for_db(self, use_json=True):
         """
-        This method parses the excel sheet and returns the data in a format that can be used by the database.
+        This method parses the excel sheet and returns the data in
+         a format that can be used by the database.
         :param use_json: whether to use json or not
         """
         data = json.loads('{}')
@@ -63,7 +69,8 @@ class Excel:
                 data[value_id]["quality"] = row[5].value
                 value_id += 1
             else:
-                values += (row[0].value, row[1].value, row[2].value), (row[3].value, row[4].value, row[5].value)
+                values += (row[0].value, row[1].value, row[2].value), (
+                    row[3].value, row[4].value, row[5].value)
         self.db_data = data
         self.values = values
 

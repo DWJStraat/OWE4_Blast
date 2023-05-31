@@ -1,13 +1,15 @@
 """
-This file contains the Server class, which is a wrapper for the mariadb library.
+This file contains the Server class, which is a wrapper for the
+mariadb library.
 It is used to connect to a mariadb server and execute queries.
 Created on 2022-04-12 by David
 Collaborators: David
 Last modified on 2022-05-31 by David
 """
 
-import mariadb
 import os.path
+
+import mariadb
 
 
 class Server:
@@ -34,7 +36,8 @@ class Server:
 
     def connect(self):
         """
-        This function connects to the server and stores the connection in self.connection
+        This function connects to the server and stores the connection
+         in self.connection
         """
         try:
             self.connection = mariadb.connect(
@@ -73,7 +76,8 @@ class Server:
 
     def getCursor(self):
         """
-        This function creates a cursor for the server and stores it in self.cursor
+        This function creates a cursor for the server and stores it
+        in self.cursor
         """
         self.cursor = self.connection.cursor()
 
@@ -155,13 +159,17 @@ class Server:
         :param parameters: The parameters to search for
         :return value: The resulting values
         """
-        # Generates a table with all the information needed to display the results, which can be used to search through
-        with open(os.path.split(os.path.dirname(__file__))[0] + r"\database\search.sql", "r") as f:
+        # Generates a table with all the information needed to display
+        # the results, which can be used to search through
+        with open(os.path.split(os.path.dirname(__file__))[
+                      0] + r"\database\search.sql", "r") as f:
             table = f.read()
-        query = f"SELECT {columns_to_select} FROM ({table}) as Br0 WHERE {parameters};"
+        query = f"SELECT {columns_to_select} FROM ({table}) as Br0 " \
+                f"WHERE {parameters};"
         return self.query(query)
 
-    # def enter_into_DB(self, json_data, enter_dna_seq = False, enter_responsible_machine=False, enter_process=False):
+    # def enter_into_DB(self, json_data, enter_dna_seq = False,
+    # enter_responsible_machine=False, enter_process=False):
     #     """
     #     This function enters the data into the database
     #     """

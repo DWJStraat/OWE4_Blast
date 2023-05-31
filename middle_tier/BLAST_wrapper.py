@@ -1,5 +1,6 @@
 """
-This file contains the BLASTwrapper class, which is a wrapper for the Bio.Blast library.\
+This file contains the BLASTwrapper class, which is a wrapper
+for the Bio.Blast library.
 This class is used to blast a sequence against a database.
 Created on 17-may-2023 by David
 Collaborators: David
@@ -19,8 +20,9 @@ class BLASTwrapper():
     This class is a wrapper for the Bio.Blast library.
     """
 
-    def __init__(self, sequence, database, name, debug=False, matrix='BLOSUM62', process = 0, program = 'blastn',
-                 expect = 10):
+    def __init__(self, sequence, database, name, debug=False,
+                 matrix='BLOSUM62', process=0, program='blastn',
+                 expect=10):
         self.hits = None
         self.xml = None
         self.result = None
@@ -40,16 +42,21 @@ class BLASTwrapper():
         """
         if not self.debug:
             timestamp = time()
-            print(f'{Style.DIM}BLASTing {self.name} against database {self.database} at {timestamp}')
-            self.result = NCBIWWW.qblast(self.program, self.database, self.sequence, alignments=15, megablast=True,
+            print(
+                f'{Style.DIM}BLASTing {self.name} against database {self.database} at {timestamp}')
+            self.result = NCBIWWW.qblast(self.program, self.database,
+                                         self.sequence, alignments=15,
+                                         megablast=True,
                                          expect=self.expect
                                          # , matrix_name=self.matrix,
-            )
+                                         )
         else:
-            print(f'{Style.DIM}BLASTing {self.name} against database {self.database}')
+            print(
+                f'{Style.DIM}BLASTing {self.name} against database {self.database}')
             self.result = open('test.xml', 'r')
 
-        print(f'{Style.DIM} Finished BLASTing {self.name} against database {self.database}')
+        print(
+            f'{Style.DIM} Finished BLASTing {self.name} against database {self.database}')
         print(f'{Style.RESET_ALL}')
         ws.Beep(1000, 100)
         with open(f'{self.process}.xml', 'x') as f:
@@ -108,6 +115,7 @@ class BLASTwrapper():
         with open(f'{self.name}.xml', 'w') as f:
             f.write(self.result.read())
             f.close()
+
 
 if __name__ == '__main__':
     file = open('test.fasta', 'r').read()
