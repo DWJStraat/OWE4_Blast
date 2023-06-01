@@ -8,7 +8,7 @@ Last modified on 17-may-2023 by David
 
 import json
 import sys
-
+import time
 sys.path.insert(0, "../")
 
 from middle_tier import mariaDB_server_wrapper as MariaDB
@@ -113,5 +113,6 @@ class BLASTer:
         Runs the BLASTer program.
         """
         while self.find_next():
+            time.sleep(10)
             self.start_blast()
         print("No more sequences to BLAST.")
