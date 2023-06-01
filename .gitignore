@@ -133,3 +133,4 @@ discord.xml
 .idea/discord.xml
 *.xml
 *.iml
+*.json
