@@ -9,6 +9,7 @@ Last modified on 17-may-2023 by David
 import json
 import sys
 import time
+
 sys.path.insert(0, "../")
 
 from middle_tier import mariaDB_server_wrapper as MariaDB
@@ -83,26 +84,31 @@ class BLASTer:
         """
         Starts the BLAST process.
         """
-        self.process_id = self.server.get_ID('Process')
-        query = f'INSERT INTO Process (ID, Status, DNA_seq_ID, ' \
-                f'Responsible_Machine_ID) ' \
-                f'VALUES ({self.process_id},0, {self.id}, {self.machine_id});'
-        if not self.debug:
-            self.server.query(query, True)
-            seq_data = self.server.query(f'SELECT * FROM DNA_seq WHERE ID = '
-                                         f'{self.id};')[0]
-        else:
-            seq_data = ['1', 'header', 'quality', 'ATCG']
-        self.quality = seq_data[2]
-        self.seq = seq_data[3]
-        self.header = seq_data[1]
-        print(self.seq)
-        self.blast = Blast.BLASTwrapper(self.seq, 'nr', self.header,
-                                        program='blastx',
-                                        debug=self.debug,
-                                        process=self.process_id, expect=0.05)
-        self.blast.blast()
-        # self.blast.load_results()
+        blast = True
+        while blast:
+            self.process_id = self.server.get_ID('Process')
+            query = f'INSERT INTO Process (ID, Status, DNA_seq_ID, ' \
+                    f'Responsible_Machine_ID) ' \
+                    f'VALUES ({self.process_id},0, {self.id}, {self.machine_id});'
+            if not self.debug:
+                self.server.query(query, True)
+                seq_data = self.server.query(f'SELECT * FROM DNA_seq WHERE ID = '
+                                             f'{self.id};')[0]
+            else:
+                seq_data = ['1', 'header', 'quality', 'ATCG']
+            self.quality = seq_data[2]
+            self.seq = seq_data[3]
+            self.header = seq_data[1]
+            print(self.seq)
+            self.blast = Blast.BLASTwrapper(self.seq, 'nr', self.header,
+                                            program='blastx',
+                                            debug=self.debug,
+                                            process=self.process_id, expect=0.05)
+            self.blast.blast()
+            # self.blast.load_results()
+            blast = self.blast.clean()
+            if blast:
+                print('BLAST failed, retrying...')
         self.blast.get_first_x()
         if not self.debug:
             self.server.query(f'UPDATE Process SET Status = 1 '

@@ -124,6 +124,15 @@ class BLASTwrapper:
             f.write(self.result.read())
             f.close()
 
+    def clean(self):
+        """
+        This function cleans the xml data
+        """
+        if self.result is not None:
+            return not self.result.iteration_message.contains('Error')
+
+
+
 
 if __name__ == '__main__':
     file = open('test.fasta', 'r').read()
