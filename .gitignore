@@ -134,3 +134,4 @@ discord.xml
 *.xml
 *.iml
 *.json
+uploads/dataset.xlsx
