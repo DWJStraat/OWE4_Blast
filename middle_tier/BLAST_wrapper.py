@@ -63,8 +63,11 @@ class BLASTwrapper:
             f'{self.database} {Style.RESET_ALL}')
         print(f'{Style.RESET_ALL}')
         # ws.Beep(1000, 100)
-        with open(f'{self.process}.xml', 'x') as f:
-            f.write(self.result.read())
+        try:
+            with open(f'{self.process}.xml', 'x') as f:
+                f.write(self.result.read())
+        except FileExistsError:
+            pass
 
     def load_results(self):
         """
