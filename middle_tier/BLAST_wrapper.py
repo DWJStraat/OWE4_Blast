@@ -131,9 +131,13 @@ class BLASTwrapper:
         """
         This function cleans the xml data
         """
-        if self.result is not None:
-            return not self.result.iteration_message.contains('Error')
-
+        try:
+            if self.result is not None:
+                return not self.result.iteration_message.contains('Error')
+            else:
+                return False
+        except AttributeError:
+            return False
 
 
 
