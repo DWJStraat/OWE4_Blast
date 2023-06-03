@@ -22,6 +22,7 @@ class Filler(Entrez):
                  password=None, database=None, process_id=None,
                  port=3306):
         super().__init__(acc_code)
+        self.organism_id = None
         self.seq_id = None
         self.process_id = process_id
         self.BLAST_result_id = None
@@ -30,11 +31,7 @@ class Filler(Entrez):
             self.server.connect()
         else:
             self.server = server
-        self.organism_id = self.server.get_ID('Organism')
-        self.genus_id = self.server.get_ID('genus')
-        self.prot_id = self.server.get_ID('Protein')
-        self.prot_name_id = self.server.get_ID('Prot_name')
-        self.name = self.get_prot_name()
+        self.name = self.get_prot_name().replace("'", '')
         self.species = self.get_species()
         self.genus = self.get_genus()
 
@@ -46,22 +43,35 @@ class Filler(Entrez):
                 f"'{self.name}') " \
                 f"= 0 THEN INSERT INTO Prot_name (Name) VALUES " \
                 f"('{self.name}');" \
-                f"END IF; " \
-                f"SELECT ID FROM Prot_name WHERE Name = '{self.name}';"
-        self.prot_name_id = self.server.query(query, commit=True)
+                f"END IF; "
+        self.server.query(query, commit=True)
+        self.prot_name_id = self.server.query(f'SELECT ID FROM Prot_name '
+                                              f'WHERE Name = '
+                                              f'"{self.name}"')[0][0]
 
     def protein(self):
         """
         This method inserts the protein into the database
         """
+        if self.prot_name_id is None:
+            self.prot_name()
         query = f"IF (SELECT COUNT(*) FROM Protein WHERE prot_name_id = " \
                 f"{self.prot_name_id}) " \
                 f"= 0 THEN INSERT INTO Protein (prot_name_id) VALUES " \
                 f"({self.prot_name_id});" \
-                f"END IF;" \
-                f"SELECT ID FROM Protein WHERE prot_name_id = " \
-                f"{self.prot_name_id};"
+                f"END IF;"
         self.prot_id = self.server.query(query, commit=True)
+
+    def fill_prot_name(self):
+        """
+        This method inserts the protein name into the database
+        """
+        query = f"IF (SELECT COUNT(*) FROM Prot_name WHERE Name = " \
+                f"'{self.name}') " \
+                f"= 0 THEN INSERT INTO Prot_name (Name) VALUES " \
+                f"('{self.name}');" \
+                f"END IF; "
+        self.prot_name_id = self.server.query(query, commit=True)
 
     def fill_genus(self):
         """
@@ -69,27 +79,26 @@ class Filler(Entrez):
         """
         query = f"IF (SELECT COUNT(*) FROM genus WHERE Name = " \
                 f"'{self.genus}') " \
-                f"= 0 THEN INSERT INTO Prot_name (Name) VALUES " \
+                f"= 0 THEN INSERT INTO genus (Name) VALUES " \
                 f"('{self.genus}');" \
-                f"END IF;" \
-                f"SELECT ID FROM genus WHERE Name = '{self.genus}';"
+                f"END IF;"
+        print(query)
         self.server.query(query, commit=True)
 
     def fill_species(self):
         """
         This method inserts the species into the database
         """
-        if self.genus_id is None:
-            self.fill_genus()
+        self.genus_id = self.server.query(f"SELECT ID FROM genus WHERE "
+                                          f"Name = "
+                                          f"'{self.genus}'")[0][0]
         if self.species is None:
             self.species = 'Unknown'
         query = f"IF (SELECT COUNT(*) FROM Organism WHERE Name = " \
                 f"'{self.species}' AND genus_ID = {self.genus_id} ) " \
                 f"= 0 THEN INSERT INTO Organism (Name, genus_ID) VALUES " \
                 f"('{self.species}', {self.genus_id});" \
-                f"END IF;" \
-                f"SELECT ID FROM Organism WHERE Name = '{self.species}' " \
-                f"AND genus_ID = {self.genus_id};"
+                f"END IF;"
         self.server.query(query, commit=True)
 
     def BLAST_result(self, e_val, id_perc, query_cover, acc_len, max_score,
@@ -104,10 +113,16 @@ class Filler(Entrez):
         :param total_score: total score
         """
         if self.organism_id is None:
-            self.organism_id = 'NULL'
+            self.organism_id = self.server.query(f'SELECT ID FROM Organism '
+                                                 f'WHERE Name = '
+                                                 f'"{self.species}"')[0][0]
         if self.prot_id is None:
-            self.prot_id = 'NULL'
-        query = f"INSERT INTO BLAST_result (E_val, Identity_percentage, " \
+            self.prot_id = self.server.query(f'SELECT ID FROM Protein WHERE '
+                                             f'prot_name_id = '
+                                             f'{self.prot_name_id}')[0][0]
+        query = f"IF (SELECT COUNT(*) FROM BLAST_result WHERE " \
+                f"DNA_seq_ID ={self.seq_id}) = 0 THEN " \
+                f"INSERT INTO BLAST_result (E_val, Identity_percentage, " \
                 f"Query_cover, Acc_len, Max_score, " \
                 f"Total_score, Accession_code, DNA_seq_ID, Protein_ID, " \
                 f"Organism_ID) VALUES  ({e_val}," \
@@ -119,7 +134,8 @@ class Filler(Entrez):
                 f"'{self.acc_code}'," \
                 f"{self.seq_id}," \
                 f"{self.prot_id}," \
-                f"{self.organism_id})"
+                f"{self.organism_id});" \
+                f"END IF;"
         print(query)
         self.server.query(query, commit=True)
 
@@ -147,10 +163,15 @@ class Filler(Entrez):
         :param total_score:
         """
         self.get_seq_id()
+        print(self.seq_id)
         self.fill_genus()
+        print('genus')
         self.fill_species()
+        print('species')
         self.prot_name()
+        print('prot_name')
         self.protein()
+        print('protein')
         self.BLAST_result(e_val, id_perc, query_cover, acc_len, max_score,
                           total_score)
 

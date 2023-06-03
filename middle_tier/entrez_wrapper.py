@@ -19,7 +19,7 @@ class EntrezWrapper:
     """
 
     def __init__(self, acc_code, sleep_between_tries=10, max_tries=10,
-                 db='nucleotide'):
+                 db='protein'):
         self.record = None
         config = json.load(open(Path('../config.json')))
         self.email = config['email']
@@ -32,7 +32,7 @@ class EntrezWrapper:
         """
         This method fetches the record from the NCBI database
         """
-        time.sleep(0.5)
+        time.sleep(3)
         print(f'Fetching {self.acc_code}')
         handle = Entrez.efetch(db=self.db,
                                id=self.acc_code,
@@ -94,4 +94,8 @@ class EntrezWrapper:
         the protein
         :return: str - species of the organism associated with the protein
         """
-        return self.get_organism().split(' ')[1].capitalize()
+        print(self.get_organism())
+        try:
+            return self.get_organism().split(' ')[1].capitalize()
+        except IndexError:
+            return self.get_organism().capitalize()

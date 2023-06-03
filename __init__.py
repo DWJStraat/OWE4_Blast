@@ -215,12 +215,11 @@ def search_results():
     :return: rendered template search_results.html
     author: David, Jalmar
     """
-    parameters = json.loads('{'
-                            f'"organism": {session["organism"]},'
-                            f'"protein": {session["protein"]},'
-                            f'"header": {session["header"]},'
-                            f'"sequence": {session["sequence"]}'
-                            '}')
+    parameters = json.loads('{}')
+    parameters['organism'] = session['organism']
+    parameters['protein'] = session['protein']
+    parameters['header'] = session['header']
+    parameters['sequence'] = session['sequence']
 
     cookies = request.cookies
     if 'username' not in cookies or 'password' not in cookies:
@@ -228,12 +227,23 @@ def search_results():
     username = cookies['username']
     password = cookies['password']
     database = cookies['database']
+    parameter = ''
+    if parameters['organism'] != '':
+        parameter += f'Br0.org_name LIKE "%{parameters["organism"]}%" '
+    if parameters['protein'] != '':
+        if parameter != '':
+            parameter += 'AND '
+        parameter += f'Br0.Prot_name LIKE "%{parameters["protein"]}%" '
+    if parameters['header'] != '':
+        if parameter != '':
+            parameter += 'AND '
+        parameter += f'Br0.seq_header LIKE "%{parameters["header"]}%" '
+    if parameters['sequence'] != '':
+        if parameter != '':
+            parameter += 'AND '
+        parameter += f'Br0.sequence LIKE "%{parameters["sequence"]}%" '
     host = config['DB_IP']
     server = MariaDb(host, username, password, database)
-    parameter = f'Br0.org_name LIKE "%{parameters["organism"]}%" ' \
-                f'AND Br0.Prot_name LIKE "%{parameters["protein"]}%" ' \
-                f'AND Br0.seq_header LIKE "%{parameters["header"]}%" ' \
-                f'AND Br0.sequence LIKE "%{parameters["sequence"]}%" '
     results = server.search('*', parameter)
     result_list = json.loads('{}')
     print(results)

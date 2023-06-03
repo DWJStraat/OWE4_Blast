@@ -164,8 +164,11 @@ class Server:
         with open(os.path.split(os.path.dirname(__file__))[
                       0] + r"\database\search.sql", "r") as f:
             table = f.read()
-        query = f"SELECT {columns_to_select} FROM ({table}) as Br0 " \
-                f"WHERE {parameters};"
+        query = f"SELECT {columns_to_select} FROM ({table}) as Br0 "
+        if parameters != "":
+            query += f"WHERE {parameters}"
+        query += ";"
+        print(query)
         return self.query(query)
 
     # def enter_into_DB(self, json_data, enter_dna_seq = False,

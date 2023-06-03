@@ -1,25 +1,21 @@
 # The query used in the MariaDB Wrapper to get the data from the database
-SELECT DISTINCT(DNA_seq.ID),
-               Br.E_val,
-               Br.Identity_percentage,
-               Br.Query_cover,
-               Br.Acc_len,
-               Br.Max_score,
-               Br.Total_score,
-               Br.Accession_code,
-               Organism.Name  as org_name,
-               genus.Name     as org_genus,
-               Prot_name.Name as Prot_name,
-               seq_header,
-               sequence
-FROM BLAST_result,
-     Organism,
-     genus,
-     Protein,
-     Prot_name,
-     DNA_seq
-         LEFT JOIN BLAST_result Br on DNA_seq.ID = Br.DNA_seq_ID
-         LEFT JOIN Organism O on Br.Organism_ID = O.ID
-         LEFT JOIN genus g on O.genus_ID = g.ID
-         LEFT JOIN Protein P on Br.Protein_ID = P.ID
-         LEFT JOIN Prot_name Pn on P.Prot_name_ID = Pn.ID
+SELECT DNA_seq.ID,
+       Br.E_val,
+       Br.Identity_percentage,
+       Br.Query_cover,
+       Br.Acc_len,
+       Br.Max_score,
+       Br.Total_score,
+       Br.Accession_code,
+       O.Name  as org_name,
+       G.Name  as org_genus,
+       Pn.Name as Prot_name,
+       DNA_seq.seq_header,
+       DNA_seq.sequence
+from DNA_seq
+         INNER JOIN BLAST_result Br on DNA_seq.ID = Br.DNA_seq_ID
+         INNER JOIN Organism O on O.ID = Br.Organism_ID
+         INNER JOIN genus G on G.ID = O.genus_ID
+         INNER JOIN Process Pc on DNA_seq.ID = Pc.DNA_seq_ID
+         INNER JOIN Protein Pt on Br.Protein_ID = Pt.ID
+         INNER JOIN Prot_name Pn on Pt.Prot_name_ID = Pn.ID
