@@ -17,10 +17,10 @@ def main():
     """
     # This part is for BLASTing all sequences in the database that haven't
     # been blasted yet.
-    BLAST = BLASTer()
+    blast = BLASTer()
     do_blast_input = input("Do you want to start a BLAST? (y/n): ")
     if do_blast_input == "y":
-        BLAST.run()
+        blast.run()
     else:
         print("No BLAST started.")
     # This part is for reading the output of the BLASTs.
