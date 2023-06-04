@@ -23,6 +23,9 @@ class Filler(Entrez):
                  password=None, database=None, process_id=None,
                  port=3306):
         super().__init__(acc_code)
+        self.genus_id = None
+        self.prot_name_id = None
+        self.prot_id = None
         self.organism_id = None
         self.seq_id = None
         self.process_id = process_id
@@ -214,33 +217,46 @@ class MassFiller:
         for entry in self.data:
             print(f'Filling entry {entry}')
             data = self.data[entry]
-            # update_process_pre_entry = f'UPDATE Process SET Status = 2
-            # WHERE ID = {entry}'
-            # self.server.query(update_process_pre_entry, commit=True)
-            if data is not None:
-                process_id = entry
-                for protein in data:
-                    for hsp in data[protein]:
-                        print('Data is not None')
-                        hsp = data[protein][hsp]
-                        print(hsp)
-                        acc_code = hsp['acc']
-                        e_val = str(hsp['e_val'])
-                        id_perc = hsp['identity']
-                        query_cover = hsp['query_cover']
-                        acc_len = hsp['hit_len']
-                        max_score = hsp['score']
-                        total_score = hsp['bit_score']
-                        print('Creating filler')
-                        self.filler = Filler(self.server, acc_code=acc_code,
-                                             process_id=int(process_id))
-                        print('Filling')
-                        print(e_val)
-                        self.filler.fill(e_val, id_perc, query_cover, acc_len,
-                                         max_score, total_score)
-            update_process = f'UPDATE Process SET Status = 3 WHERE ID = ' \
-                             f'{entry}'
-            self.server.query(update_process, commit=True)
+            try:
+                status = self.server.query(f'SELECT Status FROM Process WHERE '
+                                           f'ID = {entry}')[0][0]
+                if status <= 3:
+                    # update_process_pre_entry = f'UPDATE Process
+                    # SET Status = 2
+                    # WHERE ID = {entry}'
+                    # self.server.query(update_process_pre_entry,
+                    # commit=True)
+                    if data is not None:
+                        process_id = entry
+                        for protein in data:
+                            for hsp in data[protein]:
+                                print('Data is not None')
+                                hsp = data[protein][hsp]
+                                print(hsp)
+                                acc_code = hsp['acc']
+                                e_val = str(hsp['e_val'])
+                                id_perc = hsp['identity']
+                                query_cover = hsp['query_cover']
+                                acc_len = hsp['hit_len']
+                                max_score = hsp['score']
+                                total_score = hsp['bit_score']
+                                print('Creating filler')
+                                self.filler = Filler(self.server,
+                                                     acc_code=acc_code,
+                                                     process_id=
+                                                     int(process_id))
+                                print('Filling')
+                                print(e_val)
+                                self.filler.fill(e_val, id_perc, query_cover,
+                                                 acc_len,
+                                                 max_score, total_score)
+                    update_process = f'UPDATE Process SET Status = 3 ' \
+                                     f'WHERE ID = {entry}'
+                    self.server.query(update_process, commit=True)
+                else:
+                    print(f'Entry {entry} already processed. Skipping...')
+            except IndexError:
+                print(f'Entry {entry} not in the database. Skipping...')
 
     def run(self):
         """
