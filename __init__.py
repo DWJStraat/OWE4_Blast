@@ -229,7 +229,7 @@ def search_results():
     database = cookies['database']
     parameter = ''
     if parameters['organism'] != '':
-        parameter += f'Br0.org_name LIKE "%{parameters["organism"]}%" '
+        parameter += f'Br0.organism LIKE "%{parameters["organism"]}%" '
     if parameters['protein'] != '':
         if parameter != '':
             parameter += 'AND '
@@ -257,10 +257,10 @@ def search_results():
             'max_score': result[5],
             'total_score': result[6],
             'accession': result[7],
-            'organism': f'{result[9]} {result[8]}',
-            'protein': result[10],
-            'header': result[11],
-            'sequence': result[12],
+            'organism': f'{result[8]}',
+            'protein': result[9],
+            'header': result[10],
+            'sequence': result[11],
         }
         print(result_list)
     return render_template('search_results.html',
