@@ -2,8 +2,8 @@
 This module BLASTs all sequences in the database that
 haven't been blasted yet.
 Created on 17-may-2023 by David
-Collaborators: David
-Last modified on 17-may-2023 by David
+Collaborators: David, Douwe
+Last modified on 17-may-2023 by Douwe
 """
 
 import json
